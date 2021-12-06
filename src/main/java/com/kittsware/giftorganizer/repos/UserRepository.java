@@ -17,8 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     int deleteUserByUserEmail(String userEmail);
 
     @Modifying
-    @Query("update User u set u.userName = :userName")
-    int updateUserName(@Param("userName") String userName);
+    @Query(value = "update User u set u.user_name = :userName where u.user_email = :userEmail", nativeQuery = true)
+    int updateUserName(@Param("userName") String userName, @Param("userEmail") String userEmail);
 
     boolean existsByUserEmail(String userEmail);
 }

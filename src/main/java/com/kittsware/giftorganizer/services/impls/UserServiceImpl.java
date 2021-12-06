@@ -7,6 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -29,18 +32,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean updateUserName(String userEmail, String userName) {
-        return false;
+        //TODO: Do something if anything other than 1 row was updated.
+        //TODO: Check that the userEmail is the email from the Principal user.
+        return this.userRepository.updateUserName(userName, userEmail) == 1;
     }
 
     @Override
     public User getUserByEmail(String userEmail) {
-        return null;
+        Optional<User> user = this.userRepository.findUserByUserEmail(userEmail);
+        return user.orElse(null);
     }
 
     @Override
     public boolean deleteUserByEmail(String userEmail) {
-        return false;
+        //TODO: Do something if the below statement returns false.
+        //TODO: Check that the userEmail is the email from the Principal user.
+        return this.userRepository.deleteUserByUserEmail(userEmail) == 1;
     }
 
     private boolean doesUserEmailExist(String userEmail) {
