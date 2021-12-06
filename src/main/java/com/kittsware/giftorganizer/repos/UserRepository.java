@@ -1,6 +1,6 @@
 package com.kittsware.giftorganizer.repos;
 
-import com.kittsware.giftorganizer.models.User;
+import com.kittsware.giftorganizer.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("update User u set u.userName = :userName")
     int updateUserName(@Param("userName") String userName);
+
+    boolean existsByUserEmail(String userEmail);
 }

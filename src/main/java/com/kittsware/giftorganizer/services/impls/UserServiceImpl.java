@@ -1,6 +1,6 @@
 package com.kittsware.giftorganizer.services.impls;
 
-import com.kittsware.giftorganizer.models.User;
+import com.kittsware.giftorganizer.entities.User;
 import com.kittsware.giftorganizer.repos.UserRepository;
 import com.kittsware.giftorganizer.services.UserService;
 import org.slf4j.Logger;
@@ -18,8 +18,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
-        //TODO: What do we need to validate before saving a new User?
-        //Validate that the incoming User email doesn't already exist. (I am curious what Spring returns)
+        //Make sure the incoming object doesn't have an ID already.
+        //Make sure the incoming object's email doesn't already exist.
+        if (user.getUserId()!=null || doesUserEmailExist(user.getUserEmail())) {
+            return null;
+        }
+
+        //12.6.21: If you try to save a User with an existing email, a 500 response is thrown
         return this.userRepository.save(user);
     }
 
@@ -36,5 +41,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUserByEmail(String userEmail) {
         return false;
+    }
+
+    private boolean doesUserEmailExist(String userEmail) {
+        return this.userRepository.existsByUserEmail(userEmail);
     }
 }

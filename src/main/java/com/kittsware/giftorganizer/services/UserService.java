@@ -1,6 +1,6 @@
 package com.kittsware.giftorganizer.services;
 
-import com.kittsware.giftorganizer.models.User;
+import com.kittsware.giftorganizer.entities.User;
 
 public interface UserService {
     User createUser(User user);

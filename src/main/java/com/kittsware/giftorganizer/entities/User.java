@@ -1,4 +1,4 @@
-package com.kittsware.giftorganizer.models;
+package com.kittsware.giftorganizer.entities;
 
 import javax.persistence.*;
 
