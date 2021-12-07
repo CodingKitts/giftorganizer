@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         //Make sure the incoming object doesn't have an ID already.
         //Make sure the incoming object's email doesn't already exist.
-        if (user.getUserId()!=null || doesUserEmailExist(user.getUserEmail())) {
+        if (user.getUserId() != null || doesUserEmailExist(user.getUserEmail())) {
             return null;
         }
 
@@ -52,6 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean deleteUserByEmail(String userEmail) {
         //TODO: Do something if the below statement returns false.
         //TODO: Check that the userEmail is the email from the Principal user.

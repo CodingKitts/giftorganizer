@@ -30,4 +30,10 @@ public class UserController {
         //TODO: When you add Spring Security, replace user.getUserEmail() with Principal.GetName().
         return this.userService.updateUserName(user.getUserEmail(), user.getUserName());
     }
+
+    @DeleteMapping("/user")
+    public boolean deleteUser(@RequestBody String userEmail) {
+        //TODO: When you add Spring Security, replace userEmail with Spring Principal.GetName().
+        return this.userService.deleteUserByEmail(userEmail);
+    }
 }
