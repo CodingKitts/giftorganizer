@@ -18,7 +18,8 @@ public class FriendshipServiceImpl implements FriendshipService {
         this.friendshipRepository = friendshipRepository;
     }
 
-    public List<Friendship> getAllFriendships() {
+    @Override
+    public List<Friendship> getAllFriends() {
         return this.friendshipRepository.findAll();
     }
 
@@ -37,12 +38,5 @@ public class FriendshipServiceImpl implements FriendshipService {
     @Override
     public List<Friendship> getAllFriendsForOwner(String ownerEmail) {
         return this.friendshipRepository.findFriendshipsByOwnerEmail(ownerEmail);
-    }
-
-    @Override
-    public boolean areFriends(String ownerEmail, String friendEmail) {
-        //TODO: Validate that the emails are valid.
-        //TODO: Validate that the ownerEmail and String Security Principal are the same, in fact you'll probably pass in the principal...
-        return this.friendshipRepository.existsFriendshipByOwnerEmailAndRequestedFriendEmail(ownerEmail, friendEmail);
     }
 }

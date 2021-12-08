@@ -8,5 +8,7 @@ public interface FriendshipService {
     Friendship createFriendship(String ownerEmail, String requestedFriendEmail);
     boolean deleteFriendship(String ownerEmail, String deletedFriendEmail);
     List<Friendship> getAllFriendsForOwner(String ownerEmail);
-    boolean areFriends(String ownerEmail, String friendEmail);
+
+    //ADMIN
+    List<Friendship> getAllFriends();
 }
