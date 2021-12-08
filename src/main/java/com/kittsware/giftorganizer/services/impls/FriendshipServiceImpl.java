@@ -19,6 +19,8 @@ public class FriendshipServiceImpl implements FriendshipService {
         this.friendshipRepository = friendshipRepository;
     }
 
+    //TODO: Figure out a way to validate that emails are real.
+
     @Override
     public List<Friendship> getAllFriends() {
         return this.friendshipRepository.findAll();
