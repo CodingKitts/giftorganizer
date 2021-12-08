@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -30,8 +31,8 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
+    @Transactional
     public boolean deleteFriendship(String ownerEmail, String deletedFriendEmail) {
-
         return this.friendshipRepository.deleteFriendshipByOwnerEmailAndRequestedFriendEmail(ownerEmail, deletedFriendEmail) == 1;
     }
 
