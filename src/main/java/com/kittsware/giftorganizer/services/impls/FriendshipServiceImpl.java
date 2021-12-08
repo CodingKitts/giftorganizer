@@ -19,7 +19,7 @@ public class FriendshipServiceImpl implements FriendshipService {
         this.friendshipRepository = friendshipRepository;
     }
 
-    //TODO: Figure out a way to validate that emails are real.
+    //TODO: Incorporate the Validator service to check that FriendEmails actually have user's tied to them.
 
     @Override
     public List<Friendship> getAllFriends() {
