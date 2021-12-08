@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
-    boolean existsFriendshipByListOwnerIdAndRequestedFriendId(Long listOwnerId, Long requestedFriendId);
-    List<Friendship> findFriendshipsByListOwnerId(Long listOwnerId);
+    boolean existsFriendshipByOwnerEmailAndRequestedFriendEmail(String ownerEmail, String requestedFriendEmail);
+    List<Friendship> findFriendshipsByOwnerEmail(String ownerEmail);
+    int deleteFriendshipByOwnerEmailAndRequestedFriendEmail(String ownerEmail, String requestedFriendEmail);
 }
