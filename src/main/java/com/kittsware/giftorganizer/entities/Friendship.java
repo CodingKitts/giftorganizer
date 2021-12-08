@@ -19,6 +19,11 @@ public class Friendship {
 
     public Friendship() {}
 
+    public Friendship(String ownerEmail, String requestedFriendEmail) {
+        this.ownerEmail = ownerEmail;
+        this.requestedFriendEmail = requestedFriendEmail;
+    }
+
     public Long getFriendshipId() {
         return friendshipId;
     }
