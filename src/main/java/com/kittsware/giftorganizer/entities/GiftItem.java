@@ -14,12 +14,16 @@ public class GiftItem {
     private String giftItemName;
     private Double giftItemPrice;
     private boolean isBought;
+    private String ownerEmail;
+    private String buyerEmail;
 
     public GiftItem() {}
 
-    public GiftItem(String giftItemName, Double giftItemPrice) {
+    public GiftItem(String giftItemName, Double giftItemPrice, String ownerEmail) {
         this.giftItemName = giftItemName;
         this.giftItemPrice = giftItemPrice;
+        this.ownerEmail = ownerEmail;
+        this.buyerEmail = null;
         this.isBought = false;
     }
 
@@ -53,5 +57,21 @@ public class GiftItem {
 
     public void setBought(boolean bought) {
         isBought = bought;
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
+    }
+
+    public String getBuyerEmail() {
+        return buyerEmail;
+    }
+
+    public void setBuyerEmail(String buyerEmail) {
+        this.buyerEmail = buyerEmail;
     }
 }
