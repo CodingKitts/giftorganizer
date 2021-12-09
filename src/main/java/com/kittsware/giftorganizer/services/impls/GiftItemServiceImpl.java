@@ -1,5 +1,6 @@
 package com.kittsware.giftorganizer.services.impls;
 
+import com.kittsware.giftorganizer.entities.GiftItem;
 import com.kittsware.giftorganizer.projections.GiftItemMin;
 import com.kittsware.giftorganizer.repos.GiftItemRepository;
 import com.kittsware.giftorganizer.services.GiftItemService;
@@ -21,5 +22,11 @@ public class GiftItemServiceImpl implements GiftItemService {
     @Override
     public Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail) {
         return this.giftItemRepository.findGiftItemsByOwnerEmail(ownerEmail);
+    }
+
+    @Override
+    public GiftItem createGiftItem(GiftItem giftItem) {
+        logger.info("GIFT ITEM: "+giftItem.getGiftItemName());
+        return this.giftItemRepository.save(giftItem);
     }
 }

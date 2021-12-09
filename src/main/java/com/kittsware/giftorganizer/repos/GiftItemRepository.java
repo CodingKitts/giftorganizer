@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface GiftItemRepository extends JpaRepository<GiftItem, Long> {
@@ -18,5 +19,6 @@ public interface GiftItemRepository extends JpaRepository<GiftItem, Long> {
         purchased items as well as the original list would require DB coordination. What if I tie a Purchase object to
         the wish item? Like there is one purchase to one wish item. It would start out null?
      */
+    //List<GiftItemMin> findGiftItemsByOwnerEmail(String ownerEmail);
     Collection<GiftItemMin> findGiftItemsByOwnerEmail(String ownerEmail);
 }
