@@ -53,18 +53,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmail(String userEmail) {
-        //TODO: Do more with the user being present.
-        Optional<User> user = this.userRepository.findUserByUserEmail(userEmail);
-        if (user.isPresent()) {
-            logger.info("USER: "+user.get().getUserName());
-        } else {
-            logger.info("USER: "+user);
-        }
-        return user.orElse(null);
-    }
-
-    @Override
     @Transactional
     public boolean deleteUserByEmail(String userEmail) {
         //TODO: Check that the userEmail is the email from the Principal user.

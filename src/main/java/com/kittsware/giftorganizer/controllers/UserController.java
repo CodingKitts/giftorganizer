@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -20,20 +22,14 @@ public class UserController {
         return this.userService.createUser(user);
     }
 
-    @GetMapping("/user")
-    public User getUser(@RequestBody String userEmail) {
-        return this.userService.getUserByEmail(userEmail);
-    }
-
+    //TODO: Do we really need Users to be able to change their names?
     @PutMapping("/user/update")
-    public boolean updateUserName(@RequestBody User user) {
-        //TODO: When you add Spring Security, replace user.getUserEmail() with Principal.GetName().
-        return this.userService.updateUserName(user.getUserEmail(), user.getUserName());
+    public boolean updateUserName(@RequestBody String userName, Principal principal) {
+        return this.userService.updateUserName(principal.getName(), userName);
     }
 
     @DeleteMapping("/user")
-    public boolean deleteUser(@RequestBody String userEmail) {
-        //TODO: When you add Spring Security, replace userEmail with Spring Principal.GetName().
-        return this.userService.deleteUserByEmail(userEmail);
+    public boolean deleteUser(Principal principal) {
+        return this.userService.deleteUserByEmail(principal.getName());
     }
 }
