@@ -11,8 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 public class SecConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private AuthenticationProviderService authenticationProvider;
+
+    private final AuthenticationProviderService authenticationProvider;
+
+    public SecConfig(AuthenticationProviderService authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {

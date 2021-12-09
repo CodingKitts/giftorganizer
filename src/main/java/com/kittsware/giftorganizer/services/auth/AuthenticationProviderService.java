@@ -1,6 +1,7 @@
 package com.kittsware.giftorganizer.services.auth;
 
 import com.kittsware.giftorganizer.entities.auth.CustomUserDetails;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +16,7 @@ public class AuthenticationProviderService implements AuthenticationProvider {
     private final JpaUserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AuthenticationProviderService(JpaUserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AuthenticationProviderService(JpaUserDetailsService userDetailsService, @Lazy BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
