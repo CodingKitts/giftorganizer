@@ -15,14 +15,14 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping("/signup")
+    public User createUser(@RequestBody User user) {
+        return this.userService.createUser(user);
+    }
+
     @GetMapping("/user")
     public User getUser(@RequestBody String userEmail) {
         return this.userService.getUserByEmail(userEmail);
-    }
-
-    @PostMapping("/user/create")
-    public User createUser(@RequestBody User user) {
-        return this.userService.createUser(user);
     }
 
     @PutMapping("/user/update")
