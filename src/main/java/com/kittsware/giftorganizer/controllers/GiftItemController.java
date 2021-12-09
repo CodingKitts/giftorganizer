@@ -5,10 +5,7 @@ import com.kittsware.giftorganizer.projections.GiftItemMin;
 import com.kittsware.giftorganizer.services.GiftItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -29,5 +26,15 @@ public class GiftItemController {
     @PostMapping("/item")
     public GiftItem createGiftItem(@RequestBody GiftItem giftItem) {
         return this.giftItemService.createGiftItem(giftItem);
+    }
+
+    @DeleteMapping("/items")
+    public boolean deleteAllGiftItems(@RequestBody String ownerEmail) {
+        return this.giftItemService.deleteAllGiftItems(ownerEmail);
+    }
+
+    @DeleteMapping("/item/{itemId}")
+    public boolean deleteItemById(@PathVariable Long itemId) {
+        return this.giftItemService.deleteItemById(itemId);
     }
 }

@@ -21,4 +21,7 @@ public interface GiftItemRepository extends JpaRepository<GiftItem, Long> {
      */
     //List<GiftItemMin> findGiftItemsByOwnerEmail(String ownerEmail);
     Collection<GiftItemMin> findGiftItemsByOwnerEmail(String ownerEmail);
+
+    int deleteGiftItemsByOwnerEmail(String ownerEmail);
+    int deleteGiftItemByGiftItemId(Long giftItemId);
 }
