@@ -1,6 +1,9 @@
 package com.kittsware.giftorganizer.entities;
 
+import com.kittsware.giftorganizer.entities.auth.Authority;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -12,6 +15,9 @@ public class User {
     @Column(unique = true)
     private String userEmail;
     private String userPassword;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Authority> authorities;
 
     public User() {}
 
@@ -45,5 +51,13 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 }
