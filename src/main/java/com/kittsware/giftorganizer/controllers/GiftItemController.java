@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Collection;
 
 @RestController
@@ -19,9 +20,12 @@ public class GiftItemController {
     }
 
     @GetMapping("/items")
-    public Collection<GiftItemMin> getItemsForOwner(@RequestBody String ownerEmail) {
-        return this.giftItemService.getAllItemsForOwner(ownerEmail);
+    public Collection<GiftItemMin> getItemsForOwner(Principal principal) {
+        return this.giftItemService.getAllItemsForOwner(principal.getName());
     }
+
+    //TODO: Create function to getItems for NonOwner
+    //TODO: Create function to edit Items for Owner
 
     @PostMapping("/item")
     public GiftItem createGiftItem(@RequestBody GiftItem giftItem) {
@@ -33,6 +37,7 @@ public class GiftItemController {
         return this.giftItemService.deleteAllGiftItems(ownerEmail);
     }
 
+    //TODO: If I delete an Item, does it delete the Purchase? (If one exists)
     @DeleteMapping("/item/{itemId}")
     public boolean deleteItemById(@PathVariable Long itemId) {
         return this.giftItemService.deleteItemById(itemId);

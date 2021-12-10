@@ -31,8 +31,8 @@ public class FriendshipController {
     }
 
     @PostMapping("/friend")
-    public Friendship createFriendship(@RequestBody String friendshipEmail, Principal principal) {
-        return this.friendshipService.createFriendship(principal.getName(), friendshipEmail);
+    public Friendship createFriendship(@RequestBody String friendEmail, Principal principal) {
+        return this.friendshipService.createFriendship(principal.getName(), friendEmail);
     }
 
     @DeleteMapping("/friend")
