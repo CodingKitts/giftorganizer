@@ -1,6 +1,7 @@
 package com.kittsware.giftorganizer.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Purchase {
@@ -13,6 +14,7 @@ public class Purchase {
     private boolean wasDeleted = false;
 
     //mappedBy is the name of the field in the other Class?
+    @NotNull
     @OneToOne(mappedBy = "purchase")
     private GiftItem giftItem;
 
