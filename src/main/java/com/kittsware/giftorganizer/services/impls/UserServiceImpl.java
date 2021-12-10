@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -66,6 +67,11 @@ public class UserServiceImpl implements UserService {
             return this.userRepository.deleteUserByUserEmail(userEmail) == 1;
         }
         return false;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
     }
 
     private boolean doesUserEmailExist(String userEmail) {
