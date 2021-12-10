@@ -15,7 +15,8 @@ public class Purchase {
 
     //mappedBy is the name of the field in the other Class?
     @NotNull
-    @OneToOne(mappedBy = "purchase")
+    @OneToOne
+    @JoinColumn(name = "gift_item_id")
     private GiftItem giftItem;
 
     public Purchase() {}

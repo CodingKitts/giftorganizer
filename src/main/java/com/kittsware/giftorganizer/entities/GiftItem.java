@@ -14,7 +14,7 @@ public class GiftItem {
     private String ownerEmail;
 
     //TODO: Can I save a GiftItem without a purchase object?
-    @OneToOne
+    @OneToOne(mappedBy = "giftItem")
     private Purchase purchase;
 
     public GiftItem() {}
