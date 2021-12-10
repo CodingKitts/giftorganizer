@@ -1,9 +1,7 @@
 package com.kittsware.giftorganizer.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class GiftItem {
@@ -13,9 +11,11 @@ public class GiftItem {
 
     private String giftItemName;
     private Double giftItemPrice;
-    private boolean isBought;
     private String ownerEmail;
-    private String buyerEmail;
+
+    //TODO: Can I save a GiftItem without a purchase object?
+    @OneToOne
+    private Purchase purchase;
 
     public GiftItem() {}
 
@@ -23,8 +23,6 @@ public class GiftItem {
         this.giftItemName = giftItemName;
         this.giftItemPrice = giftItemPrice;
         this.ownerEmail = ownerEmail;
-        this.buyerEmail = null;
-        this.isBought = false;
     }
 
     public Long getGiftItemId() {
@@ -51,14 +49,6 @@ public class GiftItem {
         this.giftItemPrice = giftItemPrice;
     }
 
-    public boolean isBought() {
-        return isBought;
-    }
-
-    public void setBought(boolean bought) {
-        isBought = bought;
-    }
-
     public String getOwnerEmail() {
         return ownerEmail;
     }
@@ -67,11 +57,11 @@ public class GiftItem {
         this.ownerEmail = ownerEmail;
     }
 
-    public String getBuyerEmail() {
-        return buyerEmail;
+    public Purchase getPurchase() {
+        return purchase;
     }
 
-    public void setBuyerEmail(String buyerEmail) {
-        this.buyerEmail = buyerEmail;
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 }

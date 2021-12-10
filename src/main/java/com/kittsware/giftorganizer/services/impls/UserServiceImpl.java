@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        logger.info("USER NAME: " + user.getUserName());
+
         //Make sure the incoming object doesn't have an ID already.
         //Make sure the incoming object's email doesn't already exist.
         if (user.getUserId() != null || doesUserEmailExist(user.getUserEmail())) {
@@ -38,6 +40,7 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         User tmpUser = new User();
+        tmpUser.setUserName(user.getUserName());
         tmpUser.setUserEmail(user.getUserEmail());
         tmpUser.setUserPassword(bCryptPasswordEncoder.encode(user.getUserPassword()));
         return this.userRepository.save(tmpUser);

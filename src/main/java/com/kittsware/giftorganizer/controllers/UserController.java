@@ -19,6 +19,7 @@ public class UserController {
 
     @PostMapping("/signup")
     public User createUser(@RequestBody User user) {
+        logger.info("USER NAME: " + user.getUserName());
         return this.userService.createUser(user);
     }
 
