@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -25,22 +26,17 @@ public class FriendshipController {
     }
 
     @GetMapping("/friends")
-    public List<Friendship> getAllFriendshipsForOwner(@RequestBody String ownerEmail) {
-        //TODO: Replace RequestBody OwnerEmail with Spring Security Principal.
-        return this.friendshipService.getAllFriendsForOwner(ownerEmail);
+    public List<Friendship> getAllFriendshipsForOwner(Principal principal) {
+        return this.friendshipService.getAllFriendsForOwner(principal.getName());
     }
 
     @PostMapping("/friend")
-    public Friendship createFriendship(@RequestBody String friendshipEmail) {
-        //TODO: Replace my temp email with Spring Security Principal.
-        String ownerEmail = "user@user.com";
-        return this.friendshipService.createFriendship(ownerEmail, friendshipEmail);
+    public Friendship createFriendship(@RequestBody String friendshipEmail, Principal principal) {
+        return this.friendshipService.createFriendship(principal.getName(), friendshipEmail);
     }
 
     @DeleteMapping("/friend")
-    public boolean deleteFriendship(@RequestBody String friendEmail) {
-        //TODO: Replace my temp email with Spring Security Principal.
-        String ownerEmail = "user@user.com";
-        return this.friendshipService.deleteFriendship(ownerEmail, friendEmail);
+    public boolean deleteFriendship(@RequestBody String friendEmail, Principal principal) {
+        return this.friendshipService.deleteFriendship(principal.getName(), friendEmail);
     }
 }
