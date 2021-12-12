@@ -32,6 +32,11 @@ public class GiftItemController {
         return this.giftItemService.createGiftItem(giftItem);
     }
 
+    /*
+        Okay so what do I need to do now? The GiftItem will not return any information about the Purchase. Its also
+        difficult to attach a purchase to the wish item when the purchase gets created.
+     */
+
     @DeleteMapping("/items")
     public boolean deleteAllGiftItems(@RequestBody String ownerEmail) {
         return this.giftItemService.deleteAllGiftItems(ownerEmail);

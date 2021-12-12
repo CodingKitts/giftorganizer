@@ -14,8 +14,16 @@ public class GiftItem {
     private String ownerEmail;
 
     //TODO: Can I save a GiftItem without a purchase object?
-    @OneToOne(mappedBy = "giftItem")
-    private Purchase purchase;
+    //@OneToOne(mappedBy = "giftItem")
+    //private Purchase purchase;
+
+    //12.10.21: Refactor to merge purchase back to GiftItem.
+    //The reason I wanted them separate was that it is difficult to find objects that a Person has bought to remove when
+    //that person deletes their profile. Person A has bought an Item off Person B's list. Person A deletes the app &
+    //their profile. Essentially I would need to 1) Search every Gift Item to make sure Person A isnt a buyer. 2) For
+    //the items that Person A is a buyer, those Gift Items would need DB Updates.
+    //The Alternative is having separate objects. The issue being my stubborness to not want to include multiple repos
+    //into a single service class.
 
     public GiftItem() {}
 
@@ -57,11 +65,11 @@ public class GiftItem {
         this.ownerEmail = ownerEmail;
     }
 
-    public Purchase getPurchase() {
+    /*public Purchase getPurchase() {
         return purchase;
     }
 
     public void setPurchase(Purchase purchase) {
         this.purchase = purchase;
-    }
+    }*/
 }
