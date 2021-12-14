@@ -2,6 +2,8 @@ package com.kittsware.giftorganizer.services;
 
 import com.kittsware.giftorganizer.entities.Purchase;
 
+import java.util.List;
+
 public interface PurchaseService {
     //TODO: Brainstorm Purchase Functionality
     //Create a Purchase Item
@@ -10,6 +12,9 @@ public interface PurchaseService {
     Purchase createPurchase(Purchase purchase);
     boolean deletePurchase(String purchaserEmail, Long purchaseId);
     boolean updatePurchase(Long purchaseId);
+
+    //ADMIN FUNCTIONS
+    List<Purchase> getAllPurchases();
 
     //Do we ever need to update a Purchase Item? Yes. When it's associative Wish Item is deleted.
 

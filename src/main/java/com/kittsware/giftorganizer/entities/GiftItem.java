@@ -1,5 +1,7 @@
 package com.kittsware.giftorganizer.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,9 +15,12 @@ public class GiftItem {
     private Double giftItemPrice;
     private String ownerEmail;
 
-    //TODO: Can I save a GiftItem without a purchase object?
+    //@JsonBackReference
     //@OneToOne(mappedBy = "giftItem")
-    //private Purchase purchase;
+    //Cascade ALL means if you delete the Gift Item, Spring will also delete the Purchase.
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
 
     //12.10.21: Refactor to merge purchase back to GiftItem.
     //The reason I wanted them separate was that it is difficult to find objects that a Person has bought to remove when
@@ -65,11 +70,11 @@ public class GiftItem {
         this.ownerEmail = ownerEmail;
     }
 
-    /*public Purchase getPurchase() {
+    public Purchase getPurchase() {
         return purchase;
     }
 
     public void setPurchase(Purchase purchase) {
         this.purchase = purchase;
-    }*/
+    }
 }

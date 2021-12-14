@@ -4,11 +4,12 @@ import com.kittsware.giftorganizer.entities.GiftItem;
 import com.kittsware.giftorganizer.projections.GiftItemMin;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface GiftItemService {
     Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail);
     GiftItem createGiftItem(GiftItem giftItem);
-
+    List<GiftItem> getAllItems();
     //What else do I need to be able to do with Wish Items?
     /*
         Get Items as a Friend

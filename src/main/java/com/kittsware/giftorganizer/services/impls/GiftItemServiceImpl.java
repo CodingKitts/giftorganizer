@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class GiftItemServiceImpl implements GiftItemService {
@@ -23,6 +24,11 @@ public class GiftItemServiceImpl implements GiftItemService {
     @Override
     public Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail) {
         return this.giftItemRepository.findGiftItemsByOwnerEmail(ownerEmail);
+    }
+
+    @Override
+    public List<GiftItem> getAllItems() {
+        return this.giftItemRepository.findAll();
     }
 
     @Override

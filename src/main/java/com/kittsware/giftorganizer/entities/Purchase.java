@@ -13,10 +13,12 @@ public class Purchase {
     private Double purchasePrice;
     private boolean wasDeleted = false;
 
+    //Right now I am having trouble getting a full GiftItem w/ Purchase info together. For some reason
+
     //mappedBy is the name of the field in the other Class?
     @NotNull
-    @OneToOne
-    @JoinColumn(name = "gift_item_id")
+    @OneToOne(mappedBy = "purchase")
+    //@JoinColumn(name = "gift_item_id")
     private GiftItem giftItem;
 
     public Purchase() {}

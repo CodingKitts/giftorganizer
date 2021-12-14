@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -52,5 +53,10 @@ public class PurchaseServiceImpl implements PurchaseService {
     public boolean updatePurchase(Long purchaseId) {
         //TODO: Create a custom function to update a Purchase whenever a User Deletes the Gift Item.
         return false;
+    }
+
+    @Override
+    public List<Purchase> getAllPurchases() {
+        return this.purchaseRepository.findAll();
     }
 }

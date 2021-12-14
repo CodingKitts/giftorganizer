@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class GiftItemController {
@@ -22,6 +23,11 @@ public class GiftItemController {
     @GetMapping("/items")
     public Collection<GiftItemMin> getItemsForOwner(Principal principal) {
         return this.giftItemService.getAllItemsForOwner(principal.getName());
+    }
+
+    @GetMapping("/admin/items")
+    public List<GiftItem> getAllGiftItems() {
+        return this.giftItemService.getAllItems();
     }
 
     //TODO: Create function to getItems for NonOwner
