@@ -20,15 +20,11 @@ public class UserController {
 
     @PostMapping("/signup")
     public User createUser(@RequestBody User user) {
-        logger.info("USER NAME: " + user.getUserName());
         return this.userService.createUser(user);
     }
 
-    //TODO: Do we really need Users to be able to change their names?
     @PutMapping("/user/update")
     public boolean updateUserName(@RequestBody String userName, Principal principal) {
-        logger.info("USER NAME: " + userName);
-        logger.info("AUTH'D USER: " + principal.getName());
         return this.userService.updateUserName(principal.getName(), userName);
     }
 
