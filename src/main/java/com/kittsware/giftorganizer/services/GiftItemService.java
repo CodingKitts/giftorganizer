@@ -10,14 +10,14 @@ public interface GiftItemService {
     //TODO: Reminder - Make sure to send a Notification to Buyer when Owner deletes a Purchased Item
     //TODO: What do I need my Service to be able to do?
     /*
-        Create a new GiftItem
-        Get all Minimized GiftItems for Owner
-        Get all Full GiftItems for Friend
-        Update a GiftItem as Owner
+        x Create a new GiftItem
+        x Get all Minimized GiftItems for Owner
+        x Get all Full GiftItems for Friend
+        x Update a GiftItem as Owner
         Update a GiftItem as Friend (Purchase)
         Update a GiftItem as Friend (Return)
-        Delete a GiftItem as Owner
-        Delete all GiftItems as Owner
+        x Delete a GiftItem as Owner
+        x Delete all GiftItems as Owner
      */
 
     //ADMIN METHODS
@@ -32,6 +32,8 @@ public interface GiftItemService {
 
     //UPDATE METHODS
     int updateGiftItem(String ownerEmail, GiftItem giftItem);
+    int purchaseGiftItem(String purchaserEmail, Long giftItemId);
+    int returnGiftItem(String purchaserEmail, Long giftItemId);
 
 
     //DELETE METHODS

@@ -24,6 +24,7 @@ public class GiftItemServiceImpl implements GiftItemService {
         this.validatorService = validatorService;
     }
 
+    //GET METHODS
     @Override
     public List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail) {
         //NOTE: The ownerEmail is the User's list you are trying to obtain, not the current user.
@@ -32,17 +33,16 @@ public class GiftItemServiceImpl implements GiftItemService {
         }
         return null;
     }
-
     @Override
     public Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail) {
         return this.giftItemRepository.findGiftItemsByOwnerEmail(ownerEmail);
     }
-
     @Override
     public List<GiftItem> getAllItems() {
         return this.giftItemRepository.findAll();
     }
 
+    //PUT METHODS
     @Override
     public int updateGiftItem(String ownerEmail, GiftItem giftItem) {
         //Validate that the current User is in fact the Owner of the provided Gift item
@@ -54,18 +54,31 @@ public class GiftItemServiceImpl implements GiftItemService {
     }
 
     @Override
+    public int purchaseGiftItem(String purchaserEmail, Long giftItemId) {
+        //TODO: Create this method
+        return 0;
+    }
+
+    @Override
+    public int returnGiftItem(String purchaserEmail, Long giftItemId) {
+        //TODO: Create this method
+        return 0;
+    }
+
+    //POST METHODS
+    @Override
     public GiftItem createGiftItem(GiftItem giftItem) {
         logger.info("GIFT ITEM: "+giftItem.getGiftItemName());
         return this.giftItemRepository.save(giftItem);
     }
 
+    //DELETE METHODS
     @Override
     @Transactional
     public boolean deleteAllGiftItems(String ownerEmail) {
         //Return true if more than 0 items were deleted.
         return this.giftItemRepository.deleteGiftItemsByOwnerEmail(ownerEmail) > 0;
     }
-
     @Override
     @Transactional
     public boolean deleteItemById(Long itemId) {
