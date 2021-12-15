@@ -44,6 +44,12 @@ public class GiftItemServiceImpl implements GiftItemService {
     }
 
     @Override
+    public int updateGiftItem(String ownerEmail, String giftItemName, Double giftItemPrice, Long giftItemId) {
+        //TODO: Refactor this, it seems... off? Also validate the OwnerEmail.
+        return this.giftItemRepository.updateGiftItemAsOwner(giftItemName, giftItemPrice, giftItemId);
+    }
+
+    @Override
     public GiftItem createGiftItem(GiftItem giftItem) {
         logger.info("GIFT ITEM: "+giftItem.getGiftItemName());
         return this.giftItemRepository.save(giftItem);

@@ -30,7 +30,7 @@ public interface GiftItemService {
     Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail);
     List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail);
 
-    //GiftItemMin updateGiftItem(String ownerEmail, GiftItem giftItem);
+    int updateGiftItem(String ownerEmail, String giftItemName, Double giftItemPrice, Long giftItemId);
 
 
     //DELETE METHODS

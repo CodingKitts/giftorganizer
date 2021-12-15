@@ -36,6 +36,11 @@ public class GiftItemController {
         return this.giftItemService.getAllItems();
     }
 
+    @PutMapping("/item/{giftItemId}")
+    public int updateGiftItemAsOwner(@PathVariable Long giftItemId, @RequestBody GiftItem giftItem, Principal principal) {
+        return this.giftItemService.updateGiftItem(principal.getName(), giftItem.getGiftItemName(), giftItem.getGiftItemPrice(), giftItemId);
+    }
+
     @PostMapping("/item")
     public GiftItem createGiftItem(@RequestBody GiftItem giftItem) {
         return this.giftItemService.createGiftItem(giftItem);
