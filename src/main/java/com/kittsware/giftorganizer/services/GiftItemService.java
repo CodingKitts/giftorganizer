@@ -30,6 +30,7 @@ public interface GiftItemService {
     Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail);
     List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail);
 
+    //UPDATE METHODS
     int updateGiftItem(String ownerEmail, String giftItemName, Double giftItemPrice, Long giftItemId);
 
 
