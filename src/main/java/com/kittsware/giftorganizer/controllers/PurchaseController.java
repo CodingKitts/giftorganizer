@@ -4,10 +4,7 @@ import com.kittsware.giftorganizer.entities.Purchase;
 import com.kittsware.giftorganizer.services.PurchaseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -39,4 +36,10 @@ public class PurchaseController {
     //TODO: Create Delete function.
     //TODO: Create Get function? I don't think the users need this. I need to validate I get the purchase info after the
     //      gift item.
+
+
+    @DeleteMapping("/admin/purchase/{purchaseId}")
+    public void deletePurchaseById(@PathVariable Long purchaseId) {
+        this.purchaseService.deletePurchaseById(purchaseId);
+    }
 }

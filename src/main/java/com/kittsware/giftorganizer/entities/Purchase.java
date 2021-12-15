@@ -13,13 +13,16 @@ public class Purchase {
     private Double purchasePrice;
     private boolean wasDeleted = false;
 
+    @NotNull
+    private Long giftItemId;
+
     //Right now I am having trouble getting a full GiftItem w/ Purchase info together. For some reason
 
     //mappedBy is the name of the field in the other Class?
-    @NotNull
-    @OneToOne(mappedBy = "purchase")
+    //@NotNull
+    //@OneToOne(mappedBy = "purchase")
     //@JoinColumn(name = "gift_item_id")
-    private GiftItem giftItem;
+    //private GiftItem giftItem;
 
     public Purchase() {}
 
@@ -55,11 +58,19 @@ public class Purchase {
         this.wasDeleted = wasDeleted;
     }
 
-    public GiftItem getGiftItem() {
+    /*public GiftItem getGiftItem() {
         return giftItem;
     }
 
     public void setGiftItem(GiftItem giftItem) {
         this.giftItem = giftItem;
+    }*/
+
+    public Long getGiftItemId() {
+        return giftItemId;
+    }
+
+    public void setGiftItemId(Long giftItemId) {
+        this.giftItemId = giftItemId;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -26,14 +27,23 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public Purchase createPurchase(Purchase purchase) {
+        GiftItem giftItem = this.giftItemRepository.findById(purchase.getGiftItemId()).orElse(null);
 
-        //TODO: Get the giftItem, add it to the purchase object, save.
-        //You will need to figure out how to get the wishItem as well.
-        //What if you attach the wish Item to the purchase before sending it to the backend?
-        //As a User you are purchasing a known Item, you will have had some access to the item before confirming you
-        //bought it. Therefore, you will have access to the item object in the client prior to sending a purchase object
-        //to be saved. So, purchase objects should come attached with their wishItems.
-        return this.purchaseRepository.save(purchase);
+        //Check if the ID in the Purchase still has a GiftItem associated with it. This is important because what if a
+        //User is making a Purchase for an Item that got deleted by the owner before the User got an updated List.
+        if (giftItem == null) {
+            return null;
+        }
+
+        //We know the giftitem isnt null. So we need to attach the Purchase to the Gift Item.
+        giftItem.setPurchase(purchase);
+
+        //Now save the updated Purchase
+        this.giftItemRepository.save(giftItem);
+
+        //Now save the Purchase. We dont actually save the Purchase because GiftItem will do that due to Cascade Type.
+        return purchase;
+        //return this.purchaseRepository.save(purchase);
     }
 
     @Override
@@ -46,6 +56,18 @@ public class PurchaseServiceImpl implements PurchaseService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    @Transactional
+    public void deletePurchaseById(Long purchaseId) {
+        //This isn't working because there is a FK relationship to the GiftItem. The workaround would be to get the Item
+        //in question, remove the Purchase, and then resave.
+        Purchase purchase = this.purchaseRepository.findById(purchaseId).orElse(null);
+        if (purchase == null) {
+            return;
+        }
+        this.purchaseRepository.deleteById(purchaseId);
     }
 
     @Override

@@ -15,6 +15,7 @@ public interface PurchaseService {
 
     //ADMIN FUNCTIONS
     List<Purchase> getAllPurchases();
+    void deletePurchaseById(Long purchaseId);
 
     //Do we ever need to update a Purchase Item? Yes. When it's associative Wish Item is deleted.
 
