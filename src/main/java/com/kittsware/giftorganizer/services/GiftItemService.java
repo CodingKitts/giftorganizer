@@ -13,14 +13,15 @@ public interface GiftItemService {
         Create a new GiftItem
         Get all Minimized GiftItems for Owner
         Get all Full GiftItems for Friend
-        Get a single Minimized GiftItem for Owner
-        Get a single Full GiftItem for Friend
         Update a GiftItem as Owner
         Update a GiftItem as Friend (Purchase)
         Update a GiftItem as Friend (Return)
         Delete a GiftItem as Owner
         Delete all GiftItems as Owner
      */
+
+    //ADMIN METHODS
+    List<GiftItem> getAllItems();
 
     //CREATE METHODS
     GiftItem createGiftItem(GiftItem giftItem);
@@ -29,8 +30,10 @@ public interface GiftItemService {
     Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail);
     List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail);
 
-    List<GiftItem> getAllItems();
+    //GiftItemMin updateGiftItem(String ownerEmail, GiftItem giftItem);
 
+
+    //DELETE METHODS
     boolean deleteAllGiftItems(String ownerEmail);
     boolean deleteItemById(Long itemId);
 }

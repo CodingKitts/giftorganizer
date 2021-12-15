@@ -3,6 +3,7 @@ package com.kittsware.giftorganizer.repos;
 import com.kittsware.giftorganizer.entities.GiftItem;
 import com.kittsware.giftorganizer.projections.GiftItemMin;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;

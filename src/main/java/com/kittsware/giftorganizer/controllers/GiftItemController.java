@@ -26,7 +26,7 @@ public class GiftItemController {
         return this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
     }
 
-    @GetMapping("/items/owner")
+    @GetMapping("/owner/items")
     public Collection<GiftItemMin> getItemsForOwner(Principal principal) {
         return this.giftItemService.getAllItemsForOwner(principal.getName());
     }
