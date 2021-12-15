@@ -22,8 +22,13 @@ public interface GiftItemService {
         Delete all GiftItems as Owner
      */
 
-    Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail);
+    //CREATE METHODS
     GiftItem createGiftItem(GiftItem giftItem);
+
+    //READ METHODS
+    Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail);
+    List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail);
+
     List<GiftItem> getAllItems();
 
     boolean deleteAllGiftItems(String ownerEmail);

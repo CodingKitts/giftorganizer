@@ -21,8 +21,12 @@ public class GiftItemController {
     }
 
     //TODO: Create API methods for the Service functions.
-
     @GetMapping("/items")
+    public List<GiftItem> getAllGiftItemsForOwner(Principal principal, @RequestBody String ownerEmail) {
+        return this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
+    }
+
+    @GetMapping("/items/owner")
     public Collection<GiftItemMin> getItemsForOwner(Principal principal) {
         return this.giftItemService.getAllItemsForOwner(principal.getName());
     }

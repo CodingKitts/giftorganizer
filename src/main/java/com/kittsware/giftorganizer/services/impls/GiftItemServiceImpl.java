@@ -4,6 +4,7 @@ import com.kittsware.giftorganizer.entities.GiftItem;
 import com.kittsware.giftorganizer.projections.GiftItemMin;
 import com.kittsware.giftorganizer.repos.GiftItemRepository;
 import com.kittsware.giftorganizer.services.GiftItemService;
+import com.kittsware.giftorganizer.services.ValidatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,20 @@ import java.util.List;
 public class GiftItemServiceImpl implements GiftItemService {
     private static final Logger logger = LoggerFactory.getLogger(GiftItemServiceImpl.class);
     private final GiftItemRepository giftItemRepository;
+    private final ValidatorService validatorService;
 
-    public GiftItemServiceImpl(GiftItemRepository giftItemRepository) {
+    public GiftItemServiceImpl(GiftItemRepository giftItemRepository, ValidatorService validatorService) {
         this.giftItemRepository = giftItemRepository;
+        this.validatorService = validatorService;
+    }
+
+    @Override
+    public List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail) {
+        //NOTE: The ownerEmail is the User's list you are trying to obtain, not the current user.
+        if (this.validatorService.areFriends(ownerEmail, friendEmail)) {
+            return this.giftItemRepository.findAllByOwnerEmail(ownerEmail);
+        }
+        return null;
     }
 
     @Override
