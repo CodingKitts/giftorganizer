@@ -36,7 +36,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 
         //We know the giftitem isnt null. So we need to attach the Purchase to the Gift Item.
-        giftItem.setPurchase(purchase);
+        //giftItem.setPurchase(purchase);
 
         //Now save the updated Purchase
         this.giftItemRepository.save(giftItem);
