@@ -44,9 +44,13 @@ public class GiftItemServiceImpl implements GiftItemService {
     }
 
     @Override
-    public int updateGiftItem(String ownerEmail, String giftItemName, Double giftItemPrice, Long giftItemId) {
-        //TODO: Refactor this, it seems... off? Also validate the OwnerEmail.
-        return this.giftItemRepository.updateGiftItemAsOwner(giftItemName, giftItemPrice, giftItemId);
+    public int updateGiftItem(String ownerEmail, GiftItem giftItem) {
+        //Validate that the current User is in fact the Owner of the provided Gift item
+        if (this.validatorService.isItemOwner(ownerEmail, giftItem.getGiftItemId())) {
+            return 0;
+        }
+
+        return this.giftItemRepository.updateGiftItemAsOwner(giftItem.getGiftItemName(), giftItem.getGiftItemPrice(), giftItem.getGiftItemId());
     }
 
     @Override

@@ -31,7 +31,7 @@ public interface GiftItemService {
     List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail);
 
     //UPDATE METHODS
-    int updateGiftItem(String ownerEmail, String giftItemName, Double giftItemPrice, Long giftItemId);
+    int updateGiftItem(String ownerEmail, GiftItem giftItem);
 
 
     //DELETE METHODS

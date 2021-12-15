@@ -38,7 +38,7 @@ public class GiftItemController {
 
     @PutMapping("/item/{giftItemId}")
     public int updateGiftItemAsOwner(@PathVariable Long giftItemId, @RequestBody GiftItem giftItem, Principal principal) {
-        return this.giftItemService.updateGiftItem(principal.getName(), giftItem.getGiftItemName(), giftItem.getGiftItemPrice(), giftItemId);
+        return this.giftItemService.updateGiftItem(principal.getName(), giftItem);
     }
 
     @PostMapping("/item")
