@@ -25,8 +25,8 @@ public class GiftItem {
     @NotEmpty(message = "Owner Email must not empty")
     private String ownerEmail;
 
-    private String buyerEmail = null;
-    private boolean isBought = false;
+    private String buyerEmail;
+    private boolean isBought;
 
     public GiftItem() {}
 

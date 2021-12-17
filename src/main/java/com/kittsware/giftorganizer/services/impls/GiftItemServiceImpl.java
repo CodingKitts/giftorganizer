@@ -74,7 +74,6 @@ public class GiftItemServiceImpl implements GiftItemService {
             return null;
         }
 
-        //TODO: Make sure current User is the owner of GiftItem.
         return this.giftItemRepository.save(giftItem);
     }
 
