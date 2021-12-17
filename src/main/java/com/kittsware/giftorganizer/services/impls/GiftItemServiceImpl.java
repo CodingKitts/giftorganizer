@@ -69,8 +69,7 @@ public class GiftItemServiceImpl implements GiftItemService {
     @Override
     public GiftItem createGiftItem(String ownerEmail, GiftItem giftItem) {
         //This will check to see if there is an ID already attached to the item, as well as if the Current User & listed Item Owner are the same.
-        if (giftItem.getGiftItemId() != null || !giftItem.getOwnerEmail().equals(ownerEmail)) {
-            //TODO: Refactor to throw a Custom Exception here instead. (Malformed Request, although do we say what is wrong?
+        if (this.validatorService.isValidNewItem(ownerEmail, giftItem)) {
             return null;
         }
 
