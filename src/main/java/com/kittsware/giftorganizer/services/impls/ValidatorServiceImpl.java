@@ -42,9 +42,31 @@ public class ValidatorServiceImpl implements ValidatorService {
     @Override
     public boolean isItemOwner(String ownerEmail, Long giftItemId) {
         GiftItem giftItem = this.giftItemRepository.findById(giftItemId).orElse(null);
-        if (giftItem != null && giftItem.getOwnerEmail().equals(ownerEmail)) {
-            return true;
+        return giftItem != null && giftItem.getOwnerEmail().equals(ownerEmail);
+    }
+
+    @Override
+    public boolean isValidNewItem(String ownerEmail, GiftItem item) {
+        //Check that the new item doesn't have an ID
+        if (item.getGiftItemId() != null) {
+            return false;
         }
-        return false;
+
+        //Check that the new item doesn't have a Buyer
+        if (item.getBuyerEmail() != null) {
+            return false;
+        }
+
+        //Check that the new item isn't bought
+        if (item.isBought()) {
+            return false;
+        }
+
+        //Check the current user & item Owner are the same
+        if (!item.getOwnerEmail().equals(ownerEmail)) {
+            return false;
+        }
+
+        return true;
     }
 }
