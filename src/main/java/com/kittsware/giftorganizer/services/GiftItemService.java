@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface GiftItemService {
     //TODO: Reminder - Make sure to send a Notification to Buyer when Owner deletes a Purchased Item
-    //TODO: What do I need my Service to be able to do?
+    //NOTE: No
     /*
         x Create a new GiftItem
         x Get all Minimized GiftItems for Owner

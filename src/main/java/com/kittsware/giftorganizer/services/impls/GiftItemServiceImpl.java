@@ -68,6 +68,11 @@ public class GiftItemServiceImpl implements GiftItemService {
     //POST METHODS
     @Override
     public GiftItem createGiftItem(GiftItem giftItem) {
+        if (giftItem.getGiftItemId() != null) {
+            //TODO: Refactor to throw a Custom Exception here instead.
+            return null;
+        }
+
         logger.info("GIFT ITEM: "+giftItem.getGiftItemName());
         return this.giftItemRepository.save(giftItem);
     }
