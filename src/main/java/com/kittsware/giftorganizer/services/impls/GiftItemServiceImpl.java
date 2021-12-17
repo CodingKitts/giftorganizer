@@ -68,7 +68,6 @@ public class GiftItemServiceImpl implements GiftItemService {
     //POST METHODS
     @Override
     public GiftItem createGiftItem(String ownerEmail, GiftItem giftItem) {
-        //This will check to see if there is an ID already attached to the item, as well as if the Current User & listed Item Owner are the same.
         if (this.validatorService.isValidNewItem(ownerEmail, giftItem)) {
             return null;
         }

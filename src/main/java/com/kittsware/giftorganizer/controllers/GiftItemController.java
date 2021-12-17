@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
@@ -42,7 +43,7 @@ public class GiftItemController {
     }
 
     @PostMapping("/item")
-    public GiftItem createGiftItem(@RequestBody GiftItem giftItem, Principal principal) {
+    public GiftItem createGiftItem(@Valid @RequestBody GiftItem giftItem, Principal principal) {
         return this.giftItemService.createGiftItem(principal.getName(), giftItem);
     }
 
