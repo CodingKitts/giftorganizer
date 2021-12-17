@@ -42,8 +42,8 @@ public class GiftItemController {
     }
 
     @PostMapping("/item")
-    public GiftItem createGiftItem(@RequestBody GiftItem giftItem) {
-        return this.giftItemService.createGiftItem(giftItem);
+    public GiftItem createGiftItem(@RequestBody GiftItem giftItem, Principal principal) {
+        return this.giftItemService.createGiftItem(principal.getName(), giftItem);
     }
 
     @DeleteMapping("/items")

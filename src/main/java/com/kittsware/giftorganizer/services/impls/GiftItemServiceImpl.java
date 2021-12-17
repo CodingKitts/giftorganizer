@@ -67,13 +67,14 @@ public class GiftItemServiceImpl implements GiftItemService {
 
     //POST METHODS
     @Override
-    public GiftItem createGiftItem(GiftItem giftItem) {
-        if (giftItem.getGiftItemId() != null) {
-            //TODO: Refactor to throw a Custom Exception here instead.
+    public GiftItem createGiftItem(String ownerEmail, GiftItem giftItem) {
+        //This will check to see if there is an ID already attached to the item, as well as if the Current User & listed Item Owner are the same.
+        if (giftItem.getGiftItemId() != null || !giftItem.getOwnerEmail().equals(ownerEmail)) {
+            //TODO: Refactor to throw a Custom Exception here instead. (Malformed Request, although do we say what is wrong?
             return null;
         }
 
-        logger.info("GIFT ITEM: "+giftItem.getGiftItemName());
+        //TODO: Make sure current User is the owner of GiftItem.
         return this.giftItemRepository.save(giftItem);
     }
 
