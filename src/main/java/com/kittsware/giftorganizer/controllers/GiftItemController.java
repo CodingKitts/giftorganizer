@@ -5,6 +5,8 @@ import com.kittsware.giftorganizer.projections.GiftItemMin;
 import com.kittsware.giftorganizer.services.GiftItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -43,8 +45,10 @@ public class GiftItemController {
     }
 
     @PostMapping("/item")
-    public GiftItem createGiftItem(@Valid @RequestBody GiftItem giftItem, Principal principal) {
-        return this.giftItemService.createGiftItem(principal.getName(), giftItem);
+    public ResponseEntity<GiftItem> createGiftItem(@Valid @RequestBody GiftItem giftItem, Principal principal) {
+        //TODO: Refactor this to consider all return options for saving a new item
+        GiftItem gift = this.giftItemService.createGiftItem(principal.getName(), giftItem);
+        return new ResponseEntity<>(gift, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/items")
