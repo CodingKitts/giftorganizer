@@ -68,7 +68,7 @@ public class GiftItemServiceImpl implements GiftItemService {
     //POST METHODS
     @Override
     public GiftItem createGiftItem(String ownerEmail, GiftItem giftItem) {
-        if (this.validatorService.isValidNewItem(ownerEmail, giftItem)) {
+        if (!this.validatorService.isValidNewItem(ownerEmail, giftItem)) {
             return null;
         }
 
@@ -82,6 +82,7 @@ public class GiftItemServiceImpl implements GiftItemService {
         //Return true if more than 0 items were deleted.
         return this.giftItemRepository.deleteGiftItemsByOwnerEmail(ownerEmail) > 0;
     }
+
     @Override
     @Transactional
     public boolean deleteItemById(Long itemId) {

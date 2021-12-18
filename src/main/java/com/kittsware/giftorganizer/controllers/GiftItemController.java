@@ -48,6 +48,7 @@ public class GiftItemController {
     public ResponseEntity<GiftItem> createGiftItem(@Valid @RequestBody GiftItem giftItem, Principal principal) {
         //TODO: Refactor this to consider all return options for saving a new item
         GiftItem gift = this.giftItemService.createGiftItem(principal.getName(), giftItem);
+
         return new ResponseEntity<>(gift, HttpStatus.CREATED);
     }
 
@@ -57,7 +58,7 @@ public class GiftItemController {
     }
 
     @DeleteMapping("/item/{itemId}")
-    public boolean deleteItemById(@PathVariable Long itemId) {
+    public boolean deleteItemById(@PathVariable Long itemId) throws IllegalArgumentException{
         return this.giftItemService.deleteItemById(itemId);
     }
 }

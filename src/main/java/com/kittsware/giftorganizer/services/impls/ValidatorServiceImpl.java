@@ -48,13 +48,13 @@ public class ValidatorServiceImpl implements ValidatorService {
     @Override
     public boolean isValidNewItem(String ownerEmail, GiftItem item) {
         //TODO: Refactor to throw a Custom Exception here instead. (Malformed Request, although do we say what is wrong?
-
         //Check that the new item doesn't have an ID
         if (item.getGiftItemId() != null) {
             return false;
         }
 
         //Check that the new item doesn't have a Buyer
+        //FOr some reason Buyer email is added as a String?
         if (item.getBuyerEmail() != null) {
             return false;
         }
