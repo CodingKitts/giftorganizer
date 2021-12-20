@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
@@ -58,7 +59,11 @@ public class GiftItemController {
     }
 
     @DeleteMapping("/item/{itemId}")
-    public boolean deleteItemById(@PathVariable Long itemId) throws IllegalArgumentException{
-        return this.giftItemService.deleteItemById(itemId);
+    public ResponseEntity<String> deleteItemById(@NotNull @PathVariable final Long itemId){
+        if (this.giftItemService.deleteItemById(itemId)) {
+            return new ResponseEntity<>("Deletion Successful", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Item not Found", HttpStatus.NOT_FOUND);
+        }
     }
 }

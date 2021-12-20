@@ -86,7 +86,10 @@ public class GiftItemServiceImpl implements GiftItemService {
     @Override
     @Transactional
     public boolean deleteItemById(Long itemId) {
-        //Return true iff 1 item was deleted.
-        return this.giftItemRepository.deleteGiftItemByGiftItemId(itemId) == 1;
+        //I AM MAKING THE ASSUMPTION THAT A FALSE RETURN VALUE TRANSLATES TO A USER ID NOT BEING FOUND.
+        //EVEN THOUGH THERE IS A POSSIBILITY THAT MULTIPLE ITEMS WERE DELETED OR ITEMID BECAME INVALID
+        int val = this.giftItemRepository.deleteGiftItemByGiftItemId(itemId);
+
+        return val == 1;
     }
 }
