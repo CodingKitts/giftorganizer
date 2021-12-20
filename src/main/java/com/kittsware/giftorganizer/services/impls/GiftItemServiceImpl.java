@@ -80,6 +80,8 @@ public class GiftItemServiceImpl implements GiftItemService {
     @Transactional
     public boolean deleteAllGiftItems(String ownerEmail) {
         //Return true if more than 0 items were deleted.
+        //Will return true even if even 1 out of the entire list gets deleted.
+        //This function will only ever be used when a User deletes their Account.
         return this.giftItemRepository.deleteGiftItemsByOwnerEmail(ownerEmail) > 0;
     }
 
@@ -88,8 +90,6 @@ public class GiftItemServiceImpl implements GiftItemService {
     public boolean deleteItemById(Long itemId) {
         //I AM MAKING THE ASSUMPTION THAT A FALSE RETURN VALUE TRANSLATES TO A USER ID NOT BEING FOUND.
         //EVEN THOUGH THERE IS A POSSIBILITY THAT MULTIPLE ITEMS WERE DELETED OR ITEMID BECAME INVALID
-        int val = this.giftItemRepository.deleteGiftItemByGiftItemId(itemId);
-
-        return val == 1;
+        return this.giftItemRepository.deleteGiftItemByGiftItemId(itemId) == 1;
     }
 }

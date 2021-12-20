@@ -53,11 +53,6 @@ public class GiftItemController {
         return new ResponseEntity<>(gift, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/items")
-    public boolean deleteAllGiftItems(@RequestBody String ownerEmail) {
-        return this.giftItemService.deleteAllGiftItems(ownerEmail);
-    }
-
     @DeleteMapping("/item/{itemId}")
     public ResponseEntity<String> deleteItemById(@NotNull @PathVariable final Long itemId){
         if (this.giftItemService.deleteItemById(itemId)) {
