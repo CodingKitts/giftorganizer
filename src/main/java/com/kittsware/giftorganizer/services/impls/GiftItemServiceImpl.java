@@ -76,6 +76,7 @@ public class GiftItemServiceImpl implements GiftItemService {
     }
 
     //DELETE METHODS
+    //TODO: Move this functionality into some sort of UserRemoval Service.
     @Override
     @Transactional
     public boolean deleteAllGiftItems(String ownerEmail) {
@@ -90,6 +91,8 @@ public class GiftItemServiceImpl implements GiftItemService {
     public boolean deleteItemById(Long itemId) {
         //I AM MAKING THE ASSUMPTION THAT A FALSE RETURN VALUE TRANSLATES TO A USER ID NOT BEING FOUND.
         //EVEN THOUGH THERE IS A POSSIBILITY THAT MULTIPLE ITEMS WERE DELETED OR ITEMID BECAME INVALID
+        //TODO: Create a Special Notification of Item Deletion for the Friend that Bought the Item.
+        //TODO: Create a Notification of Item Deletion for all Friends of the User.
         return this.giftItemRepository.deleteGiftItemByGiftItemId(itemId) == 1;
     }
 }
