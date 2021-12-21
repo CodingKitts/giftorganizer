@@ -34,14 +34,12 @@ public class GiftItemServiceImpl implements GiftItemService {
             return null;
         }
 
-
         if (this.validatorService.areFriends(ownerEmail, friendEmail)) {
-            //Okay so when OwnerEmail is null an empty List is still sent.
-            //What about when the email is wrong? Empty List
-            //So do I care if the OwnerEmail gets messed up before pulling? No
+            //An empty list is sent regardless of whether there are no items, or if the ownerEmail is wrong.
+            //We will make checks on the ownerEmail prior to getting info, that way if an empty list is returned, it is
+            //only because the list was empty and not because the email is wrong.
             return this.giftItemRepository.findAllByOwnerEmail(ownerEmail);
         }
-        logger.info("VALIDATOR FAILED TO CONFIRM THEY ARE FRIENDS");
         return null;
     }
     @Override
