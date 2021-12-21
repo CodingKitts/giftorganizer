@@ -40,6 +40,9 @@ public class ValidatorServiceImpl implements ValidatorService {
     @Override
     public boolean isValidEmail(String email) {
         //12.8.21: Right now we are only checking if there is a User associated with the given email.
+        if (email.isEmpty()) {
+            return false;
+        }
         return this.userRepository.existsByUserEmail(email);
     }
 

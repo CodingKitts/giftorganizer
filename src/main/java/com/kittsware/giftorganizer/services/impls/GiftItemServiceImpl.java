@@ -28,9 +28,20 @@ public class GiftItemServiceImpl implements GiftItemService {
     @Override
     public List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail) {
         //NOTE: The ownerEmail is the User's list you are trying to obtain, not the current user.
+
+        if (!this.validatorService.isValidEmail(ownerEmail)) {
+            //TODO: Refactor this to throw an exception that we can process. This happens when the email is empty, invalid format, or no associated user.
+            return null;
+        }
+
+
         if (this.validatorService.areFriends(ownerEmail, friendEmail)) {
+            //Okay so when OwnerEmail is null an empty List is still sent.
+            //What about when the email is wrong? Empty List
+            //So do I care if the OwnerEmail gets messed up before pulling? No
             return this.giftItemRepository.findAllByOwnerEmail(ownerEmail);
         }
+        logger.info("VALIDATOR FAILED TO CONFIRM THEY ARE FRIENDS");
         return null;
     }
     @Override

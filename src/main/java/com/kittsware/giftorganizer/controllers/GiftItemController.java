@@ -7,9 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.Collection;
@@ -24,10 +26,19 @@ public class GiftItemController {
         this.giftItemService = giftItemService;
     }
 
-    //TODO: Create API methods for the Service functions.
     @GetMapping("/items")
-    public List<GiftItem> getAllGiftItemsForOwner(Principal principal, @RequestBody String ownerEmail) {
-        return this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
+    public ResponseEntity<List<GiftItem>> getAllGiftItemsForOwner(@RequestBody String ownerEmail, Principal principal) {
+        //The validation stuff won't work on ownerEmail because it is String and not a custom Class.
+        //The Service should check that the email isn't empty.
+        List<GiftItem> items = this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
+        /*if (items == null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }*/
+        //Do I care if the list is Empty? No Right? The Client should have to worry about that. I care if there are
+        //errors... Wait what if the Email is invalid?
+        //if (items.isEmpty())
+        //return this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @GetMapping("/owner/items")
