@@ -30,7 +30,11 @@ public class ValidatorServiceImpl implements ValidatorService {
 
     @Override
     public boolean areFriends(String ownerEmail, String friendEmail) {
-        return this.friendshipRepository.existsFriendshipByOwnerEmailAndRequestedFriendEmail(ownerEmail, friendEmail);
+        logger.info("OWNER EMAIL: " + ownerEmail);
+        logger.info("FRIEND EMAIL: " + friendEmail);
+
+        //TODO: Refactor Friendships to make it easier to search for friends of a user.
+        return this.friendshipRepository.existsFriendshipByOwnerEmailAndRequestedFriendEmail(ownerEmail, friendEmail) || this.friendshipRepository.existsFriendshipByOwnerEmailAndRequestedFriendEmail(friendEmail, ownerEmail);
     }
 
     @Override
