@@ -28,16 +28,11 @@ public class GiftItemController {
 
     @GetMapping("/items")
     public ResponseEntity<List<GiftItem>> getAllGiftItemsForOwner(@RequestBody String ownerEmail, Principal principal) {
-        //The validation stuff won't work on ownerEmail because it is String and not a custom Class.
-        //The Service should check that the email isn't empty.
         List<GiftItem> items = this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
-        /*if (items == null) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }*/
-        //Do I care if the list is Empty? No Right? The Client should have to worry about that. I care if there are
-        //errors... Wait what if the Email is invalid?
-        //if (items.isEmpty())
-        //return this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
+        if (items == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
