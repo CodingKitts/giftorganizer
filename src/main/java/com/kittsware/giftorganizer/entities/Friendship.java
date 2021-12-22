@@ -7,20 +7,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
 @Entity
 public class Friendship {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long friendshipId;
 
-    @NotEmpty
+    @NotEmpty(message = "Sender Email must not be empty")
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String senderEmail;
-    @NotEmpty
+    @NotEmpty(message = "Recipient Email must not be empty")
+    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String recipientEmail;
     private boolean isAccepted;
 
