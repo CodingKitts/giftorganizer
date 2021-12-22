@@ -4,6 +4,8 @@ import com.kittsware.giftorganizer.entities.Friendship;
 import com.kittsware.giftorganizer.services.FriendshipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -31,8 +33,13 @@ public class FriendshipController {
     }
 
     @PostMapping("/friend")
-    public Friendship createFriendship(@RequestBody String friendEmail, Principal principal) {
-        return this.friendshipService.createFriendship(principal.getName(), friendEmail);
+    public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) {
+        Friendship friendship = this.friendshipService.createFriendship(principal.getName(), recipientEmail);
+
+        if (friendship == null) {
+            return new ResponseEntity<>(HttpStatus.)
+        }
+        return this.friendshipService.createFriendship(principal.getName(), recipientEmail);
     }
 
     @DeleteMapping("/friend")

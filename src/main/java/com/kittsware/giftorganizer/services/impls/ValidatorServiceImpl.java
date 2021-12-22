@@ -1,6 +1,7 @@
 package com.kittsware.giftorganizer.services.impls;
 
 import com.kittsware.giftorganizer.entities.GiftItem;
+import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
 import com.kittsware.giftorganizer.repos.FriendshipRepository;
 import com.kittsware.giftorganizer.repos.GiftItemRepository;
 import com.kittsware.giftorganizer.repos.UserRepository;
@@ -39,14 +40,9 @@ public class ValidatorServiceImpl implements ValidatorService {
 
     @Override
     public boolean isValidEmail(String email) {
-        //Make sure the email isn't empty
-        if (email.isEmpty()) {
-            return false;
-        }
-
-        //Make sure the email is of valid format
-        if (!email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
-            return false;
+        //Make sure the email isn't empty and the email matches a valid regex
+        if (email.isEmpty() || !email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+            throw new InvalidEmailException("Invalid Email provided");
         }
 
         //Make sure the email has an associative User

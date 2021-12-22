@@ -1,6 +1,7 @@
 package com.kittsware.giftorganizer.services.impls;
 
 import com.kittsware.giftorganizer.entities.Friendship;
+import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
 import com.kittsware.giftorganizer.repos.FriendshipRepository;
 import com.kittsware.giftorganizer.services.FriendshipService;
 import com.kittsware.giftorganizer.services.ValidatorService;
@@ -30,12 +31,19 @@ public class FriendshipServiceImpl implements FriendshipService {
     }
 
     @Override
-    public Friendship createFriendship(String ownerEmail, String requestedFriendEmail) {
-        //TODO: Refactor the names of the emails to make sure they match to the Entity names
-        if (!this.validatorService.isValidEmail(ownerEmail)) {
+    public Friendship createFriendship(String senderEmail, String recipientEmail) {
+        //The Add Friend service function now throws an exception. Otherwise if no User is found it returns false.
+        try {
+            if (this.validatorService.isValidEmail(recipientEmail)) {
+                return this.friendshipRepository.save(new Friendship(senderEmail, recipientEmail));
+            } else {
+                //TODO: refactor this so that you are doing something because no User is associated with SenderEmail.
+                return null;
+            }
+        } catch (InvalidEmailException e) {
+            //TODO: refactor this so that you are doing something because the email is invalid.
             return null;
         }
-        return this.friendshipRepository.save(new Friendship(ownerEmail, requestedFriendEmail));
     }
 
     @Override
