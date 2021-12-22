@@ -18,11 +18,7 @@ public class Friendship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long friendshipId;
 
-    @NotEmpty(message = "Sender Email must not be empty")
-    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String senderEmail;
-    @NotEmpty(message = "Recipient Email must not be empty")
-    @Email(message = "Email is not valid", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String recipientEmail;
     private boolean isAccepted;
 

@@ -43,6 +43,10 @@ public class ValidatorServiceImpl implements ValidatorService {
         if (email.isEmpty()) {
             return false;
         }
+
+        if (!email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+            return false;
+        }
         return this.userRepository.existsByUserEmail(email);
     }
 
