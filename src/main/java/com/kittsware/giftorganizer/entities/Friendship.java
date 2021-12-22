@@ -1,10 +1,16 @@
 package com.kittsware.giftorganizer.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
+@Getter
+@Setter
 @Entity
 public class Friendship {
 
@@ -12,49 +18,18 @@ public class Friendship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long friendshipId;
 
+    @NotEmpty
     private String senderEmail;
+    @NotEmpty
     private String recipientEmail;
     private boolean isAccepted;
 
-    //TODO: Incorporate more details into this like date, and make it a request feature.
-
-    public Friendship() {}
+    public Friendship() {
+    }
 
     public Friendship(String senderEmail, String recipientEmail) {
         this.senderEmail = senderEmail;
         this.recipientEmail = recipientEmail;
         this.isAccepted = false;
-    }
-
-    public Long getFriendshipId() {
-        return friendshipId;
-    }
-
-    public void setFriendshipId(Long friendshipId) {
-        this.friendshipId = friendshipId;
-    }
-
-    public String getSenderEmail() {
-        return senderEmail;
-    }
-
-    public void setSenderEmail(String senderEmail) {
-        this.senderEmail = senderEmail;
-    }
-
-    public String getRecipientEmail() {
-        return recipientEmail;
-    }
-
-    public void setRecipientEmail(String recipientEmail) {
-        this.recipientEmail = recipientEmail;
-    }
-
-    public boolean isAccepted() {
-        return isAccepted;
-    }
-
-    public void setAccepted(boolean accepted) {
-        isAccepted = accepted;
     }
 }
