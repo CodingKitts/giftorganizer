@@ -39,14 +39,17 @@ public class ValidatorServiceImpl implements ValidatorService {
 
     @Override
     public boolean isValidEmail(String email) {
-        //12.8.21: Right now we are only checking if there is a User associated with the given email.
+        //Make sure the email isn't empty
         if (email.isEmpty()) {
             return false;
         }
 
+        //Make sure the email is of valid format
         if (!email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
             return false;
         }
+
+        //Make sure the email has an associative User
         return this.userRepository.existsByUserEmail(email);
     }
 

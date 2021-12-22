@@ -3,6 +3,7 @@ package com.kittsware.giftorganizer.services.impls;
 import com.kittsware.giftorganizer.entities.Friendship;
 import com.kittsware.giftorganizer.repos.FriendshipRepository;
 import com.kittsware.giftorganizer.services.FriendshipService;
+import com.kittsware.giftorganizer.services.ValidatorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,11 @@ import java.util.List;
 public class FriendshipServiceImpl implements FriendshipService {
     private static final Logger logger = LoggerFactory.getLogger(FriendshipServiceImpl.class);
     private final FriendshipRepository friendshipRepository;
+    private final ValidatorService validatorService;
 
-    public FriendshipServiceImpl(FriendshipRepository friendshipRepository) {
+    public FriendshipServiceImpl(FriendshipRepository friendshipRepository, ValidatorService validatorService) {
         this.friendshipRepository = friendshipRepository;
+        this.validatorService = validatorService;
     }
 
     //TODO: Incorporate the Validator service to check that FriendEmails actually have user's tied to them.
@@ -28,7 +31,10 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public Friendship createFriendship(String ownerEmail, String requestedFriendEmail) {
-        //TODO: Validate that a DB ID gets created.
+        //TODO: Refactor the names of the emails to make sure they match to the Entity names
+        if (!this.validatorService.isValidEmail(ownerEmail)) {
+            return null;
+        }
         return this.friendshipRepository.save(new Friendship(ownerEmail, requestedFriendEmail));
     }
 
