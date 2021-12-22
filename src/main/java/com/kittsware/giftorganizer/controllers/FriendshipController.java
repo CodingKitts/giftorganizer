@@ -36,10 +36,11 @@ public class FriendshipController {
     public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) {
         Friendship friendship = this.friendshipService.createFriendship(principal.getName(), recipientEmail);
 
+        //TODO: Refactor to leverage the different cases between an invalid email, friend not found, and success
         if (friendship == null) {
-            return new ResponseEntity<>(HttpStatus.)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return this.friendshipService.createFriendship(principal.getName(), recipientEmail);
+        return new ResponseEntity<>(friendship, HttpStatus.OK);
     }
 
     @DeleteMapping("/friend")
