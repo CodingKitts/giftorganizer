@@ -14,6 +14,7 @@ public class Friendship {
 
     private String senderEmail;
     private String recipientEmail;
+    private boolean isAccepted;
 
     //TODO: Incorporate more details into this like date, and make it a request feature.
 
@@ -22,6 +23,7 @@ public class Friendship {
     public Friendship(String senderEmail, String recipientEmail) {
         this.senderEmail = senderEmail;
         this.recipientEmail = recipientEmail;
+        this.isAccepted = false;
     }
 
     public Long getFriendshipId() {
@@ -46,5 +48,13 @@ public class Friendship {
 
     public void setRecipientEmail(String recipientEmail) {
         this.recipientEmail = recipientEmail;
+    }
+
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
     }
 }
