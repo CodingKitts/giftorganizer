@@ -12,16 +12,16 @@ public class Friendship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long friendshipId;
 
-    private String ownerEmail;
-    private String requestedFriendEmail;
+    private String senderEmail;
+    private String recipientEmail;
 
     //TODO: Incorporate more details into this like date, and make it a request feature.
 
     public Friendship() {}
 
-    public Friendship(String ownerEmail, String requestedFriendEmail) {
-        this.ownerEmail = ownerEmail;
-        this.requestedFriendEmail = requestedFriendEmail;
+    public Friendship(String senderEmail, String recipientEmail) {
+        this.senderEmail = senderEmail;
+        this.recipientEmail = recipientEmail;
     }
 
     public Long getFriendshipId() {
@@ -32,19 +32,19 @@ public class Friendship {
         this.friendshipId = friendshipId;
     }
 
-    public String getOwnerEmail() {
-        return ownerEmail;
+    public String getSenderEmail() {
+        return senderEmail;
     }
 
-    public void setOwnerEmail(String listOwnerId) {
-        this.ownerEmail = listOwnerId;
+    public void setSenderEmail(String senderEmail) {
+        this.senderEmail = senderEmail;
     }
 
-    public String getRequestedFriendEmail() {
-        return requestedFriendEmail;
+    public String getRecipientEmail() {
+        return recipientEmail;
     }
 
-    public void setRequestedFriendEmail(String requestedFriendId) {
-        this.requestedFriendEmail = requestedFriendId;
+    public void setRecipientEmail(String recipientEmail) {
+        this.recipientEmail = recipientEmail;
     }
 }
