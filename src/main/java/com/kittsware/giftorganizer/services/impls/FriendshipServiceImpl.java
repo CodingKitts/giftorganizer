@@ -48,12 +48,12 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     @Transactional
-    public boolean deleteFriendship(String ownerEmail, String deletedFriendEmail) {
-        return this.friendshipRepository.deleteFriendshipByOwnerEmailAndRequestedFriendEmail(ownerEmail, deletedFriendEmail) == 1;
+    public boolean deleteFriendship(String senderEmail, String recipientEmail) {
+        return this.friendshipRepository.deleteFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail) == 1;
     }
 
     @Override
-    public List<Friendship> getAllFriendsForOwner(String ownerEmail) {
-        return this.friendshipRepository.findFriendshipsByOwnerEmail(ownerEmail);
+    public List<Friendship> getAllFriendsForOwner(String senderEmail) {
+        return this.friendshipRepository.findFriendshipsBySenderEmail(senderEmail);
     }
 }

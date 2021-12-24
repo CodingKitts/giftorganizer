@@ -30,12 +30,9 @@ public class ValidatorServiceImpl implements ValidatorService {
     //TODO: Create a function that checks that the given email address is of the correct format. (REGEX FUN)
 
     @Override
-    public boolean areFriends(String ownerEmail, String friendEmail) {
-        logger.info("OWNER EMAIL: " + ownerEmail);
-        logger.info("FRIEND EMAIL: " + friendEmail);
-
+    public boolean areFriends(String senderEmail, String recipientEmail) {
         //TODO: Refactor Friendships to make it easier to search for friends of a user.
-        return this.friendshipRepository.existsFriendshipByOwnerEmailAndRequestedFriendEmail(ownerEmail, friendEmail) || this.friendshipRepository.existsFriendshipByOwnerEmailAndRequestedFriendEmail(friendEmail, ownerEmail);
+        return this.friendshipRepository.existsFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail) || this.friendshipRepository.existsFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail);
     }
 
     @Override
