@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FriendshipServiceImpl implements FriendshipService {
@@ -32,16 +33,10 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public Friendship createFriendship(String senderEmail, String recipientEmail) {
-        //The Add Friend service function now throws an exception. Otherwise if no User is found it returns false.
-        try {
-            if (this.validatorService.isValidEmail(recipientEmail)) {
-                return this.friendshipRepository.save(new Friendship(senderEmail, recipientEmail));
-            } else {
-                //TODO: refactor this so that you are doing something because no User is associated with SenderEmail.
-                return null;
-            }
-        } catch (InvalidEmailException e) {
-            //TODO: refactor this so that you are doing something because the email is invalid.
+        if (this.validatorService.isValidEmail(recipientEmail) && this.validatorService.isValidEmail(senderEmail)) {
+            return this.friendshipRepository.save(new Friendship(senderEmail, recipientEmail));
+        } else {
+            //TODO: refactor this so that you are doing something because no User is associated with SenderEmail.
             return null;
         }
     }
