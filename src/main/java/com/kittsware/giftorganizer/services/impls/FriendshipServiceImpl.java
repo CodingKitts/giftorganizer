@@ -54,6 +54,10 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public List<Friendship> getAllFriendsForOwner(String senderEmail) {
+        if (senderEmail == null) {
+            return null;
+        }
+
         return this.friendshipRepository.findFriendshipsBySenderEmail(senderEmail);
     }
 }

@@ -29,7 +29,11 @@ public class FriendshipController {
 
     @GetMapping("/friends")
     public ResponseEntity<List<Friendship>> getAllFriendshipsForOwner(Principal principal) {
-        return new ResponseEntity<>(this.friendshipService.getAllFriendsForOwner(principal.getName()), HttpStatus.OK);
+        List<Friendship> friends = this.friendshipService.getAllFriendsForOwner(principal.getName());
+        if (friends == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
     @PostMapping("/friend")
