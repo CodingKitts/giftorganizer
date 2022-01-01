@@ -17,6 +17,15 @@ public class FriendshipController {
     private static final Logger logger = LoggerFactory.getLogger(FriendshipController.class);
     private final FriendshipService friendshipService;
 
+    /*
+        1) Friend A submits request to add Friend B
+        2) Friend B accepts or declines request from Friend A
+
+        If a request exists, and the accepted value is still false, the requested friend has not addressed the request
+        If someone declines a request, we must delete the entity because otherwise our app will think the request hasnt
+        been addressed yet.
+     */
+
     public FriendshipController(FriendshipService friendshipService) {
         this.friendshipService = friendshipService;
     }
@@ -48,8 +57,18 @@ public class FriendshipController {
         }
     }
 
+    //TODO: Create a function to get all friendship requests for me that havent been responded to yet.
+
+    @PutMapping("/friend/{friendshipId}")
+    public ResponseEntity<Friendship> updateFriendship(@PathVariable Long friendshipId, Principal principal) {
+        //Okay so if a Friend declines a request, we shouldnt even update, we should just delete.
+        //Thus if we are in this function, that means the request was accepted. So we just need to update the one
+        //column.
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("/friend")
-    public boolean deleteFriendship(@RequestBody String friendEmail, Principal principal) {
+    public boolean deleteFriendshipAsOwner(@RequestBody String friendEmail, Principal principal) {
         //Okay so someone wants to delete a friend from their list. What exactly does this mean?
         //Make sure that a Friendship exists, delete it. What about any associated items?
         //Do we assume a bought item will be returned? Or still given? I am leaning on returned.
@@ -68,5 +87,12 @@ public class FriendshipController {
 
 
         return this.friendshipService.deleteFriendship(principal.getName(), friendEmail);
+    }
+
+    //Remember, only the recipient of the Request can decline. Otherwise it is a normal delete.
+    @DeleteMapping("/friend/{friendshipId}")
+    public boolean declineFriendshipRequest(@PathVariable Long friendshipId, Principal principal) {
+        //TODO: Write this function.
+        return this.friendshipService.declineFriendship(principal.getName(), friendshipId);
     }
 }

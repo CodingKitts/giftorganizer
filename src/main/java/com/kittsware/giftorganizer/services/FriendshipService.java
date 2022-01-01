@@ -7,6 +7,7 @@ import java.util.List;
 public interface FriendshipService {
     Friendship createFriendship(String senderEmail, String recipientEmail);
     boolean deleteFriendship(String ownerEmail, String deletedFriendEmail);
+    boolean declineFriendship(String recipientEmail, Long friendshipId);
     List<Friendship> getAllFriendsForOwner(String ownerEmail);
 
     //ADMIN

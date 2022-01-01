@@ -8,4 +8,5 @@ public interface ValidatorService {
     boolean isValidEmail(String email) throws InvalidEmailException;
     boolean isItemOwner(String ownerEmail, Long giftItemId);
     boolean isValidNewItem(String ownerEmail, GiftItem item);
+    boolean isValidFriendship(String recipientEmail, Long friendshipId);
 }

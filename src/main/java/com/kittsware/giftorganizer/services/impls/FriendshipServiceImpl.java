@@ -55,4 +55,24 @@ public class FriendshipServiceImpl implements FriendshipService {
 
         return this.friendshipRepository.findFriendshipsBySenderEmail(senderEmail);
     }
+
+    @Override
+    @Transactional
+    public boolean declineFriendship(String recipientEmail, Long friendshipId) {
+        //Make sure RecipientEmail is valid.
+        //Make sure there is a friendship associated with the ID
+        //Make sure that the Recipient emails match
+        //Delete the Friendship
+        if (!this.validatorService.isValidEmail(recipientEmail)) {
+            return false;
+        }
+
+        if (!this.validatorService.isValidFriendship(recipientEmail, friendshipId)) {
+            return false;
+        }
+
+        this.friendshipRepository.deleteById(friendshipId);
+
+        return true;
+    }
 }

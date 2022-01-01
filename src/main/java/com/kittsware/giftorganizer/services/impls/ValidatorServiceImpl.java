@@ -1,5 +1,6 @@
 package com.kittsware.giftorganizer.services.impls;
 
+import com.kittsware.giftorganizer.entities.Friendship;
 import com.kittsware.giftorganizer.entities.GiftItem;
 import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
 import com.kittsware.giftorganizer.repos.FriendshipRepository;
@@ -72,6 +73,21 @@ public class ValidatorServiceImpl implements ValidatorService {
 
         //Check the current user & item Owner are the same
         if (!item.getOwnerEmail().equals(ownerEmail)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean isValidFriendship(String recipientEmail, Long friendshipId) {
+        //Assume Email is valid.
+        Optional<Friendship> friendship = this.friendshipRepository.findById(friendshipId);
+        if (friendship.isEmpty()) {
+            return false;
+        }
+
+        if (!friendship.get().getRecipientEmail().equals(recipientEmail)) {
             return false;
         }
 
