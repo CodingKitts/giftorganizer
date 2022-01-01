@@ -75,4 +75,19 @@ public class FriendshipServiceImpl implements FriendshipService {
 
         return true;
     }
+
+    @Override
+    public Friendship acceptFriendship(String recipientEmail, Long friendshipId) {
+        //TODO: Refactor this to do more than just return null.
+
+        if (!this.validatorService.isValidEmail(recipientEmail)) {
+            return null;
+        }
+
+        if (!this.validatorService.isValidFriendship(recipientEmail, friendshipId)) {
+            return null;
+        }
+
+        return this.friendshipRepository.acceptFriendshipRequest(friendshipId);
+    }
 }

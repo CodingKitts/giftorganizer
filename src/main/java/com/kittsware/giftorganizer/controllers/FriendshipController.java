@@ -61,10 +61,13 @@ public class FriendshipController {
 
     @PutMapping("/friend/{friendshipId}")
     public ResponseEntity<Friendship> updateFriendship(@PathVariable Long friendshipId, Principal principal) {
-        //Okay so if a Friend declines a request, we shouldnt even update, we should just delete.
-        //Thus if we are in this function, that means the request was accepted. So we just need to update the one
-        //column.
-        return new ResponseEntity<>(HttpStatus.OK);
+        //TODO: Refactor this to address different situations that can arise, such as no friendship with ID, or EMail
+        //      is invalid.
+        Friendship friendship = this.friendshipService.acceptFriendship(principal.getName(), friendshipId);
+        if (friendship == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(friendship, HttpStatus.OK);
     }
 
     @DeleteMapping("/friend")
@@ -92,7 +95,7 @@ public class FriendshipController {
     //Remember, only the recipient of the Request can decline. Otherwise it is a normal delete.
     @DeleteMapping("/friend/{friendshipId}")
     public boolean declineFriendshipRequest(@PathVariable Long friendshipId, Principal principal) {
-        //TODO: Write this function.
+        //TODO: Refactor to leverage ResponseEntity
         return this.friendshipService.declineFriendship(principal.getName(), friendshipId);
     }
 }
