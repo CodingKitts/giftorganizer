@@ -28,8 +28,8 @@ public class FriendshipController {
     }
 
     @GetMapping("/friends")
-    public List<Friendship> getAllFriendshipsForOwner(Principal principal) {
-        return this.friendshipService.getAllFriendsForOwner(principal.getName());
+    public ResponseEntity<List<Friendship>> getAllFriendshipsForOwner(Principal principal) {
+        return new ResponseEntity<>(this.friendshipService.getAllFriendsForOwner(principal.getName()), HttpStatus.OK);
     }
 
     @PostMapping("/friend")
@@ -45,6 +45,23 @@ public class FriendshipController {
 
     @DeleteMapping("/friend")
     public boolean deleteFriendship(@RequestBody String friendEmail, Principal principal) {
+        //Okay so someone wants to delete a friend from their list. What exactly does this mean?
+        //Make sure that a Friendship exists, delete it. What about any associated items?
+        //Do we assume a bought item will be returned? Or still given? I am leaning on returned.
+
+        //We should send a warning to the user being deleted that they shoudl return any items.
+
+        //Okay so you need to:
+        //See if a Friendship exists between the users.
+        //Delete the Friendship Row regardless of the Friendship Owner.
+        //Update Owner Items that were bought by the removed Friend to be returned.
+        //Update Friend Items that were bought by the Owner to be returned.
+
+        //So either person on the Friendship can delete it.
+
+        //TODO: If one friend deletes a friendship, does the other person still get access to their list?
+
+
         return this.friendshipService.deleteFriendship(principal.getName(), friendEmail);
     }
 }
