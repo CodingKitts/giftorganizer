@@ -76,6 +76,7 @@ public class FriendshipServiceImpl implements FriendshipService {
         return true;
     }
 
+    //TODO: EXCEPTION HANDLING WILL OCCUR IN THE CONTROLLER
     @Override
     public Friendship acceptFriendship(String recipientEmail, Long friendshipId) {
         //TODO: Refactor this to do more than just return null.
@@ -89,5 +90,15 @@ public class FriendshipServiceImpl implements FriendshipService {
         }
 
         return this.friendshipRepository.acceptFriendshipRequest(friendshipId);
+    }
+
+    @Override
+    public List<Friendship> getOutstandingRequests(String recipientEmail) {
+        return null;
+    }
+
+    @Override
+    public List<Friendship> getSentRequests(String senderEmail) {
+        return null;
     }
 }

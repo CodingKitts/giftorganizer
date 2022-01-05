@@ -35,6 +35,7 @@ public class FriendshipController {
         return this.friendshipService.getAllFriends();
     }
 
+    //TODO: Refactor this to only retrieve friendships that have been accepted where you are the sender or the recipient.
     @GetMapping("/friends")
     public ResponseEntity<List<Friendship>> getAllFriendshipsForOwner(Principal principal) {
         List<Friendship> friends = this.friendshipService.getAllFriendsForOwner(principal.getName());
@@ -57,7 +58,22 @@ public class FriendshipController {
         }
     }
 
-    //TODO: Create a function to get all friendship requests for me that havent been responded to yet.
+    //TODO: Create a function to get all friendship requests for me that I haven't responded to yet.
+
+    @GetMapping("/friends/requests")
+    public ResponseEntity<List<Friendship>> getOutstandingRequests(Principal principal) throws InvalidEmailException{
+        //Email is bad, but we are passing user name so I should still check.
+        //No outstanding requests (Client problem)
+        try {
+            List<Friendship> requests = this.friendshipService.getOutstandingRequests(principal.getName());
+            return new ResponseEntity<>(requests, HttpStatus.OK);
+        } catch (InvalidEmailException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/friends/sent")
+    //TODO: Create a function to get all friendship requests I've sent that haven't been responded to yet.
 
     @PutMapping("/friend/{friendshipId}")
     public ResponseEntity<Friendship> updateFriendship(@PathVariable Long friendshipId, Principal principal) {
