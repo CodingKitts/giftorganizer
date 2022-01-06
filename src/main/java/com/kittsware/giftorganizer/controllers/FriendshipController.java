@@ -35,14 +35,18 @@ public class FriendshipController {
         return this.friendshipService.getAllFriends();
     }
 
-    //TODO: Refactor this to only retrieve friendships that have been accepted where you are the sender or the recipient.
     @GetMapping("/friends")
     public ResponseEntity<List<Friendship>> getAllFriendshipsForOwner(Principal principal) {
-        List<Friendship> friends = this.friendshipService.getAllFriendsForOwner(principal.getName());
-        if (friends == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            List<Friendship> requests = this.friendshipService.getAllFriendsForOwner(principal.getName());
+            return new ResponseEntity<>(requests, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(InvalidEmailException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
     @GetMapping("/friends/requests")
