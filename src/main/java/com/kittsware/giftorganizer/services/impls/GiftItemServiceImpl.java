@@ -28,11 +28,8 @@ public class GiftItemServiceImpl implements GiftItemService {
     @Override
     public List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail) {
         //NOTE: The ownerEmail is the User's list you are trying to obtain, not the current user.
-
-        if (!this.validatorService.isValidEmail(ownerEmail)) {
-            //TODO: Refactor this to throw an exception that we can process. This happens when the email is empty, invalid format, or no associated user.
-            return null;
-        }
+        this.validatorService.isValidEmail(ownerEmail);
+        this.validatorService.isValidEmail(friendEmail);
 
         if (this.validatorService.areFriends(ownerEmail, friendEmail)) {
             //An empty list is sent regardless of whether there are no items, or if the ownerEmail is wrong.

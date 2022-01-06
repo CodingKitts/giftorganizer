@@ -12,7 +12,10 @@ import java.util.List;
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     boolean existsFriendshipBySenderEmailAndRecipientEmail(String senderEmail, String recipientEmail);
     List<Friendship> findFriendshipsBySenderEmail(String senderEmail);
+    List<Friendship> findFriendshipsByRecipientEmail(String recipientEmail);
     int deleteFriendshipBySenderEmailAndRecipientEmail(String senderEmail, String recipientEmail);
+
+    List<Friendship> findFriendshipsByRecipientEmailAndAcceptedFalse(String recipientEmail);
 
     @Modifying
     @Query(value = "update friendship f set f.is_accepted = true where f.friendship_id = :friendshipId", nativeQuery = true)

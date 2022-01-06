@@ -33,12 +33,10 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public Friendship createFriendship(String senderEmail, String recipientEmail) {
-        if (this.validatorService.isValidEmail(recipientEmail) && this.validatorService.isValidEmail(senderEmail)) {
-            return this.friendshipRepository.save(new Friendship(senderEmail, recipientEmail));
-        } else {
-            //TODO: refactor this so that you are doing something because no User is associated with SenderEmail.
-            return null;
-        }
+        this.validatorService.isValidEmail(recipientEmail);
+        this.validatorService.isValidEmail(senderEmail);
+
+        return this.friendshipRepository.save(new Friendship(senderEmail, recipientEmail));
     }
 
     @Override
@@ -63,9 +61,7 @@ public class FriendshipServiceImpl implements FriendshipService {
         //Make sure there is a friendship associated with the ID
         //Make sure that the Recipient emails match
         //Delete the Friendship
-        if (!this.validatorService.isValidEmail(recipientEmail)) {
-            return false;
-        }
+        this.validatorService.isValidEmail(recipientEmail);
 
         if (!this.validatorService.isValidFriendship(recipientEmail, friendshipId)) {
             return false;
@@ -81,9 +77,7 @@ public class FriendshipServiceImpl implements FriendshipService {
     public Friendship acceptFriendship(String recipientEmail, Long friendshipId) {
         //TODO: Refactor this to do more than just return null.
 
-        if (!this.validatorService.isValidEmail(recipientEmail)) {
-            return null;
-        }
+        this.validatorService.isValidEmail(recipientEmail);
 
         if (!this.validatorService.isValidFriendship(recipientEmail, friendshipId)) {
             return null;
@@ -94,7 +88,16 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public List<Friendship> getOutstandingRequests(String recipientEmail) {
-        return null;
+        /*
+            This function is supposed to validate the incoming email is valid.
+            It is supposed to gather all requests that have been sent to recipientEmail that Recipient hasn't
+            responded to yet. I think a custom Query will work best.
+         */
+
+        this.validatorService.isValidEmail(recipientEmail);
+
+        //return this.friendshipRepository.findFriendshipsByRecipientEmail(recipientEmail);
+        return this.friendshipRepository.findFriendshipsByRecipientEmailAndAcceptedFalse(recipientEmail);
     }
 
     @Override

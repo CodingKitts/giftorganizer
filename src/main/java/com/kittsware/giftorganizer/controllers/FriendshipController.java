@@ -45,6 +45,32 @@ public class FriendshipController {
         return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
+    @GetMapping("/friends/requests")
+    public ResponseEntity<List<Friendship>> getOutstandingRequests(Principal principal) {
+        try {
+            List<Friendship> requests = this.friendshipService.getOutstandingRequests(principal.getName());
+            return new ResponseEntity<>(requests, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            //If Invalid Email return Bad Request, else return Not Found for User not Found.
+            if (e.getClass().equals(InvalidEmailException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/friends/sent")
+    public ResponseEntity<List<Friendship>> getSentRequests(Principal principal) {
+        try {
+            List<Friendship> requests = this.friendshipService.getSentRequests(principal.getName());
+            return new ResponseEntity<>(requests, HttpStatus.OK);
+        } catch (InvalidEmailException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    //TODO: Create a function to get all friendship requests I've sent that haven't been responded to yet.
+
     @PostMapping("/friend")
     public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) throws InvalidEmailException {
         try {
@@ -58,25 +84,8 @@ public class FriendshipController {
         }
     }
 
-    //TODO: Create a function to get all friendship requests for me that I haven't responded to yet.
-
-    @GetMapping("/friends/requests")
-    public ResponseEntity<List<Friendship>> getOutstandingRequests(Principal principal) throws InvalidEmailException{
-        //Email is bad, but we are passing user name so I should still check.
-        //No outstanding requests (Client problem)
-        try {
-            List<Friendship> requests = this.friendshipService.getOutstandingRequests(principal.getName());
-            return new ResponseEntity<>(requests, HttpStatus.OK);
-        } catch (InvalidEmailException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping("/friends/sent")
-    //TODO: Create a function to get all friendship requests I've sent that haven't been responded to yet.
-
     @PutMapping("/friend/{friendshipId}")
-    public ResponseEntity<Friendship> updateFriendship(@PathVariable Long friendshipId, Principal principal) {
+    public ResponseEntity<Friendship> acceptFriendship(@PathVariable Long friendshipId, Principal principal) {
         //TODO: Refactor this to address different situations that can arise, such as no friendship with ID, or EMail
         //      is invalid.
         Friendship friendship = this.friendshipService.acceptFriendship(principal.getName(), friendshipId);
