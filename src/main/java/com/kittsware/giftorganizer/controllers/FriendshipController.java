@@ -1,7 +1,10 @@
 package com.kittsware.giftorganizer.controllers;
 
 import com.kittsware.giftorganizer.entities.Friendship;
+import com.kittsware.giftorganizer.exceptions.FriendshipConflictException;
 import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
+import com.kittsware.giftorganizer.exceptions.InvalidFriendshipException;
+import com.kittsware.giftorganizer.exceptions.UserNotFoundException;
 import com.kittsware.giftorganizer.services.FriendshipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +81,7 @@ public class FriendshipController {
     }
 
     @PostMapping("/friend")
-    public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) throws InvalidEmailException {
+    public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) {
         try {
             Friendship friendship = this.friendshipService.createFriendship(principal.getName(), recipientEmail);
             return new ResponseEntity<>(friendship, HttpStatus.OK);
@@ -86,19 +89,32 @@ public class FriendshipController {
             if (e.getClass().equals(InvalidEmailException.class)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            if (e.getClass().equals(UserNotFoundException.class)) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            /*if (e.getClass().equals(FriendshipConflictException.class)) {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }*/
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 
     @PutMapping("/friend/{friendshipId}")
     public ResponseEntity<Friendship> acceptFriendship(@PathVariable Long friendshipId, Principal principal) {
-        //TODO: Refactor this to address different situations that can arise, such as no friendship with ID, or EMail
-        //      is invalid.
-        Friendship friendship = this.friendshipService.acceptFriendship(principal.getName(), friendshipId);
-        if (friendship == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            Friendship friendship = this.friendshipService.acceptFriendship(principal.getName(), friendshipId);
+            return new ResponseEntity<>(friendship, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            //TODO: Refactor this so that the returned exceptions can provide the client more information. Right now client
+            //      only knows if it was a bad request or not found. But now the bad request / not found could be
+            //      friendship or user.
+            if (e.getClass().equals(InvalidEmailException.class) || e.getClass().equals(InvalidFriendshipException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(friendship, HttpStatus.OK);
     }
 
     @DeleteMapping("/friend")

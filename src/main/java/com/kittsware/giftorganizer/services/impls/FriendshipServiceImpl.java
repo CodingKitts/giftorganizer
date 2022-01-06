@@ -35,6 +35,7 @@ public class FriendshipServiceImpl implements FriendshipService {
     public Friendship createFriendship(String senderEmail, String recipientEmail) {
         this.validatorService.isValidEmail(recipientEmail);
         this.validatorService.isValidEmail(senderEmail);
+        this.validatorService.friendshipExists(senderEmail, recipientEmail);
 
         return this.friendshipRepository.save(new Friendship(senderEmail, recipientEmail));
     }
@@ -60,26 +61,17 @@ public class FriendshipServiceImpl implements FriendshipService {
         //Make sure that the Recipient emails match
         //Delete the Friendship
         this.validatorService.isValidEmail(recipientEmail);
-
-        if (!this.validatorService.isValidFriendship(recipientEmail, friendshipId)) {
-            return false;
-        }
+        this.validatorService.isValidFriendship(recipientEmail, friendshipId);
 
         this.friendshipRepository.deleteById(friendshipId);
 
         return true;
     }
 
-    //TODO: EXCEPTION HANDLING WILL OCCUR IN THE CONTROLLER
     @Override
     public Friendship acceptFriendship(String recipientEmail, Long friendshipId) {
-        //TODO: Refactor this to do more than just return null.
-
         this.validatorService.isValidEmail(recipientEmail);
-
-        if (!this.validatorService.isValidFriendship(recipientEmail, friendshipId)) {
-            return null;
-        }
+        this.validatorService.isValidFriendship(recipientEmail, friendshipId);
 
         return this.friendshipRepository.acceptFriendshipRequest(friendshipId);
     }

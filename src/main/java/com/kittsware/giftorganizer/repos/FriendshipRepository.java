@@ -21,6 +21,6 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     List<Friendship> findFriendshipsBySenderEmailAndAcceptedFalse(String senderEmail);
 
     @Modifying
-    @Query(value = "update friendship f set f.is_accepted = true where f.friendship_id = :friendshipId", nativeQuery = true)
+    @Query(value = "update friendship f set f.accepted = true where f.friendship_id = :friendshipId", nativeQuery = true)
     Friendship acceptFriendshipRequest(Long friendshipId);
 }

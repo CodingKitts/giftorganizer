@@ -2,8 +2,7 @@ package com.kittsware.giftorganizer.services.impls;
 
 import com.kittsware.giftorganizer.entities.Friendship;
 import com.kittsware.giftorganizer.entities.GiftItem;
-import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
-import com.kittsware.giftorganizer.exceptions.UserNotFoundException;
+import com.kittsware.giftorganizer.exceptions.*;
 import com.kittsware.giftorganizer.repos.FriendshipRepository;
 import com.kittsware.giftorganizer.repos.GiftItemRepository;
 import com.kittsware.giftorganizer.repos.UserRepository;
@@ -32,14 +31,16 @@ public class ValidatorServiceImpl implements ValidatorService {
     //TODO: Create a function that checks that the given email address is of the correct format. (REGEX FUN)
 
     @Override
-    public boolean areFriends(String senderEmail, String recipientEmail) {
-        return this.friendshipRepository.existsFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail) || this.friendshipRepository.existsFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail);
+    public void friendshipExists(String senderEmail, String recipientEmail) {
+        if (this.friendshipRepository.existsFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail) || this.friendshipRepository.existsFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail)) {
+            throw new FriendshipConflictException("Friendship already Exists");
+        }
     }
 
     @Override
     public void isValidEmail(String email) {
         //Make sure the email isn't empty and the email matches a valid regex
-        if (email.isEmpty() || !email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
+        if (email==null || email.isEmpty() || !email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")) {
             throw new InvalidEmailException("Invalid Email provided");
         }
 
@@ -83,17 +84,18 @@ public class ValidatorServiceImpl implements ValidatorService {
     }
 
     @Override
-    public boolean isValidFriendship(String recipientEmail, Long friendshipId) {
+    public void isValidFriendship(String recipientEmail, Long friendshipId) {
         //Assume Email is valid.
+        //Okay so we get the Optional Friendship from the repo. If its not found we throw a Friendship not found.
         Optional<Friendship> friendship = this.friendshipRepository.findById(friendshipId);
         if (friendship.isEmpty()) {
-            return false;
+            throw new FriendshipNotFoundException("Friendship not found for ID: " + friendshipId);
         }
 
+        //Otherwise if the recipient emails don't match we should consider this a bad request.
         if (!friendship.get().getRecipientEmail().equals(recipientEmail)) {
-            return false;
+            throw new InvalidFriendshipException("Invalid Recipient Email");
         }
 
-        return true;
     }
 }
