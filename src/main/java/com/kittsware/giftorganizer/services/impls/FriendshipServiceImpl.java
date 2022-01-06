@@ -48,12 +48,8 @@ public class FriendshipServiceImpl implements FriendshipService {
     @Override
     public List<Friendship> getAllFriendsForOwner(String ownerEmail) {
         this.validatorService.isValidEmail(ownerEmail);
-        //TODO:
-        //List<Friendship> friendships = this.friendshipRepository.findFriendshipsBySenderEmailAndAcceptedTrue(ownerEmail);
-        //friendships.addAll(this.friendshipRepository.findFriendshipsByRecipientEmailAndAcceptedTrue(ownerEmail));
-        List<Friendship> friendships = this.friendshipRepository.findFriendshipsBySenderEmailAndAcceptedTrueOrRecipientEmailAndAcceptedTrue(ownerEmail, ownerEmail);
 
-        return friendships;
+        return this.friendshipRepository.findFriendshipsBySenderEmailAndAcceptedTrueOrRecipientEmailAndAcceptedTrue(ownerEmail, ownerEmail);
     }
 
     @Override
