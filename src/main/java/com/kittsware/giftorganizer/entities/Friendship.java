@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
@@ -20,7 +18,7 @@ public class Friendship {
 
     private String senderEmail;
     private String recipientEmail;
-    private boolean isAccepted;
+    private boolean accepted;
 
     public Friendship() {
     }
@@ -28,6 +26,6 @@ public class Friendship {
     public Friendship(String senderEmail, String recipientEmail) {
         this.senderEmail = senderEmail;
         this.recipientEmail = recipientEmail;
-        this.isAccepted = false;
+        this.accepted = false;
     }
 }

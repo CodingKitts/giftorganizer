@@ -65,8 +65,11 @@ public class FriendshipController {
         try {
             List<Friendship> requests = this.friendshipService.getSentRequests(principal.getName());
             return new ResponseEntity<>(requests, HttpStatus.OK);
-        } catch (InvalidEmailException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(InvalidEmailException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     //TODO: Create a function to get all friendship requests I've sent that haven't been responded to yet.

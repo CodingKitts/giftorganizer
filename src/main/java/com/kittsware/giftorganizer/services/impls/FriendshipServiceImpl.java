@@ -88,20 +88,15 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     public List<Friendship> getOutstandingRequests(String recipientEmail) {
-        /*
-            This function is supposed to validate the incoming email is valid.
-            It is supposed to gather all requests that have been sent to recipientEmail that Recipient hasn't
-            responded to yet. I think a custom Query will work best.
-         */
-
         this.validatorService.isValidEmail(recipientEmail);
 
-        //return this.friendshipRepository.findFriendshipsByRecipientEmail(recipientEmail);
-        return this.friendshipRepository.findFriendshipsByRecipientEmailAndIsAcceptedFalse(recipientEmail);
+        return this.friendshipRepository.findFriendshipsByRecipientEmailAndAcceptedFalse(recipientEmail);
     }
 
     @Override
     public List<Friendship> getSentRequests(String senderEmail) {
-        return null;
+        this.validatorService.isValidEmail(senderEmail);
+
+        return this.friendshipRepository.findFriendshipsBySenderEmailAndAcceptedFalse(senderEmail);
     }
 }
