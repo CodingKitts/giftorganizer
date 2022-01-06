@@ -72,7 +72,6 @@ public class FriendshipController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //TODO: Create a function to get all friendship requests I've sent that haven't been responded to yet.
 
     //TODO: Refactor this to leverage custom exceptions.
     @PostMapping("/friend")
