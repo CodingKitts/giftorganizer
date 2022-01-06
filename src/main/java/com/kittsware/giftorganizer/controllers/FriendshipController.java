@@ -71,6 +71,7 @@ public class FriendshipController {
     }
     //TODO: Create a function to get all friendship requests I've sent that haven't been responded to yet.
 
+    //TODO: Refactor this to leverage custom exceptions.
     @PostMapping("/friend")
     public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) throws InvalidEmailException {
         try {

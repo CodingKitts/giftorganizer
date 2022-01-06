@@ -97,7 +97,7 @@ public class FriendshipServiceImpl implements FriendshipService {
         this.validatorService.isValidEmail(recipientEmail);
 
         //return this.friendshipRepository.findFriendshipsByRecipientEmail(recipientEmail);
-        return this.friendshipRepository.findFriendshipsByRecipientEmailAndAcceptedFalse(recipientEmail);
+        return this.friendshipRepository.findFriendshipsByRecipientEmailAndIsAcceptedFalse(recipientEmail);
     }
 
     @Override
