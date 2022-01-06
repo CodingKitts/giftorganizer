@@ -77,17 +77,16 @@ public class FriendshipController {
         }
     }
 
-    //TODO: Refactor this to leverage custom exceptions.
     @PostMapping("/friend")
     public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) throws InvalidEmailException {
         try {
             Friendship friendship = this.friendshipService.createFriendship(principal.getName(), recipientEmail);
-            if (friendship == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
             return new ResponseEntity<>(friendship, HttpStatus.OK);
-        } catch (InvalidEmailException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(InvalidEmailException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
