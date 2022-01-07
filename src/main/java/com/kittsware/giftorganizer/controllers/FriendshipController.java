@@ -119,6 +119,9 @@ public class FriendshipController {
 
     @DeleteMapping("/friend")
     public boolean deleteFriendshipAsOwner(@RequestBody String friendEmail, Principal principal) {
+        //TODO: Refactor this to allow either the sender or recipient to delete a friendship. Make sure the friendship
+        //      is accepted first before deleting, and that the provided email is either the sender / recipient.
+
         //Okay so someone wants to delete a friend from their list. What exactly does this mean?
         //Make sure that a Friendship exists, delete it. What about any associated items?
         //Do we assume a bought item will be returned? Or still given? I am leaning on returned.
