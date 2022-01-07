@@ -33,11 +33,13 @@ public class FriendshipController {
         this.friendshipService = friendshipService;
     }
 
+    /* ADMIN METHODS */
     @GetMapping("/admin/friends")
     public List<Friendship> getAllFriendships() {
         return this.friendshipService.getAllFriends();
     }
 
+    /* GET METHODS */
     @GetMapping("/friends")
     public ResponseEntity<List<Friendship>> getAllFriendshipsForOwner(Principal principal) {
         try {
@@ -51,7 +53,6 @@ public class FriendshipController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
     @GetMapping("/friends/requests")
     public ResponseEntity<List<Friendship>> getOutstandingRequests(Principal principal) {
         try {
@@ -66,7 +67,6 @@ public class FriendshipController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
     @GetMapping("/friends/sent")
     public ResponseEntity<List<Friendship>> getSentRequests(Principal principal) {
         try {
@@ -80,6 +80,7 @@ public class FriendshipController {
         }
     }
 
+    /* POST METHODS */
     @PostMapping("/friend")
     public ResponseEntity<Friendship> createFriendship(@RequestBody String recipientEmail, Principal principal) {
         try {
@@ -101,6 +102,7 @@ public class FriendshipController {
         }
     }
 
+    /* PUT METHODS */
     @PutMapping("/friend/{friendshipId}")
     public ResponseEntity<Friendship> acceptFriendship(@PathVariable Long friendshipId, Principal principal) {
         try {
@@ -117,6 +119,7 @@ public class FriendshipController {
         }
     }
 
+    /* DELETE METHODS */
     @DeleteMapping("/friend")
     public boolean deleteFriendshipAsOwner(@RequestBody String friendEmail, Principal principal) {
         //TODO: Refactor this to allow either the sender or recipient to delete a friendship. Make sure the friendship
@@ -141,7 +144,6 @@ public class FriendshipController {
 
         return this.friendshipService.deleteFriendship(principal.getName(), friendEmail);
     }
-
     @DeleteMapping("/friend/{friendshipId}")
     public ResponseEntity<String> declineFriendshipRequest(@PathVariable Long friendshipId, Principal principal) {
         try {
