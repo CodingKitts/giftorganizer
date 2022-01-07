@@ -85,14 +85,15 @@ public class ValidatorServiceImpl implements ValidatorService {
 
     @Override
     public void isValidFriendship(String recipientEmail, Long friendshipId) {
-        //Assume Email is valid.
-        //Okay so we get the Optional Friendship from the repo. If its not found we throw a Friendship not found.
+        if (friendshipId == null) {
+            throw new FriendshipNotFoundException("Friendship not found for ID: " + friendshipId);
+        }
+
         Optional<Friendship> friendship = this.friendshipRepository.findById(friendshipId);
         if (friendship.isEmpty()) {
             throw new FriendshipNotFoundException("Friendship not found for ID: " + friendshipId);
         }
 
-        //Otherwise if the recipient emails don't match we should consider this a bad request.
         if (!friendship.get().getRecipientEmail().equals(recipientEmail)) {
             throw new InvalidFriendshipException("Invalid Recipient Email");
         }

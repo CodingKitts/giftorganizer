@@ -139,10 +139,18 @@ public class FriendshipController {
         return this.friendshipService.deleteFriendship(principal.getName(), friendEmail);
     }
 
-    //Remember, only the recipient of the Request can decline. Otherwise it is a normal delete.
     @DeleteMapping("/friend/{friendshipId}")
-    public boolean declineFriendshipRequest(@PathVariable Long friendshipId, Principal principal) {
-        //TODO: Refactor to leverage ResponseEntity
-        return this.friendshipService.declineFriendship(principal.getName(), friendshipId);
+    public ResponseEntity<String> declineFriendshipRequest(@PathVariable Long friendshipId, Principal principal) {
+        try {
+            this.friendshipService.declineFriendship(principal.getName(), friendshipId);
+            return new ResponseEntity<>("Success. Friendship declined.", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            //TODO: Refactor this so that the returned exceptions can provide the client more information. This is possible
+            //      because you are returning a String now, and not an Object.
+            if (e.getClass().equals(InvalidEmailException.class) || e.getClass().equals(InvalidFriendshipException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }
