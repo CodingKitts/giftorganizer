@@ -94,6 +94,10 @@ public class ValidatorServiceImpl implements ValidatorService {
             throw new FriendshipNotFoundException("Friendship not found for ID: " + friendshipId);
         }
 
+        if (friendship.get().isAccepted()) {
+            throw new InvalidFriendshipException("Request already accepted");
+        }
+
         if (!friendship.get().getRecipientEmail().equals(recipientEmail)) {
             throw new InvalidFriendshipException("Invalid Recipient Email");
         }

@@ -58,6 +58,7 @@ public class FriendshipServiceImpl implements FriendshipService {
     public void declineFriendship(String recipientEmail, Long friendshipId) {
         this.validatorService.isValidEmail(recipientEmail);
         this.validatorService.isValidFriendship(recipientEmail, friendshipId);
+        //Should I make sure that the accepted value is false?
 
         this.friendshipRepository.deleteById(friendshipId);
     }
