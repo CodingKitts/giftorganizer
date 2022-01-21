@@ -1,6 +1,7 @@
 package com.kittsware.giftorganizer.controllers;
 
 import com.kittsware.giftorganizer.entities.GiftItem;
+import com.kittsware.giftorganizer.exceptions.FriendshipConflictException;
 import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
 import com.kittsware.giftorganizer.exceptions.InvalidItemException;
 import com.kittsware.giftorganizer.projections.GiftItemMin;
@@ -30,12 +31,16 @@ public class GiftItemController {
 
     @GetMapping("/items")
     public ResponseEntity<List<GiftItem>> getAllGiftItemsForFriend(@RequestBody String ownerEmail, Principal principal) {
-        List<GiftItem> items = this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
-        if (items == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        try {
+            List<GiftItem> items = this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
+            return new ResponseEntity<>(items, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(InvalidEmailException.class) || e.getClass().equals(FriendshipConflictException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         }
-
-        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @GetMapping("/owner/items")
