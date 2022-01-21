@@ -41,7 +41,7 @@ public class GiftItemServiceImpl implements GiftItemService {
         return this.giftItemRepository.findAllByOwnerEmail(ownerEmail);
     }
     @Override
-    public Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail) {
+    public List<GiftItemMin> getAllItemsForOwner(String ownerEmail) {
         return this.giftItemRepository.findGiftItemsByOwnerEmail(ownerEmail);
     }
     @Override

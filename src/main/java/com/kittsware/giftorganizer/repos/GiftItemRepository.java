@@ -14,7 +14,7 @@ import java.util.List;
 public interface GiftItemRepository extends JpaRepository<GiftItem, Long> {
 
     List<GiftItem> findAllByOwnerEmail(String ownerEmail);
-    Collection<GiftItemMin> findGiftItemsByOwnerEmail(String ownerEmail);
+    List<GiftItemMin> findGiftItemsByOwnerEmail(String ownerEmail);
 
     @Modifying
     @Query(value = "update gift_item g set g.gift_item_name = :giftItemName and g.gift_item_price = :giftItemPrice where g.gift_item_id = :giftItemId", nativeQuery = true)

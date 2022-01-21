@@ -29,7 +29,7 @@ public class GiftItemController {
     }
 
     @GetMapping("/items")
-    public ResponseEntity<List<GiftItem>> getAllGiftItemsForOwner(@RequestBody String ownerEmail, Principal principal) {
+    public ResponseEntity<List<GiftItem>> getAllGiftItemsForFriend(@RequestBody String ownerEmail, Principal principal) {
         List<GiftItem> items = this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
         if (items == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -39,7 +39,7 @@ public class GiftItemController {
     }
 
     @GetMapping("/owner/items")
-    public Collection<GiftItemMin> getItemsForOwner(Principal principal) {
+    public List<GiftItemMin> getItemsForOwner(Principal principal) {
         return this.giftItemService.getAllItemsForOwner(principal.getName());
     }
 

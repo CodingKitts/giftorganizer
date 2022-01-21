@@ -26,7 +26,7 @@ public interface GiftItemService {
     GiftItem createGiftItem(String ownerEmail, GiftItem giftItem);
 
     //READ METHODS
-    Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail);
+    List<GiftItemMin> getAllItemsForOwner(String ownerEmail);
     List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail);
 
     //UPDATE METHODS
