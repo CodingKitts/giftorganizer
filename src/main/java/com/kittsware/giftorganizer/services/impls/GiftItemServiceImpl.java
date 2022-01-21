@@ -42,6 +42,8 @@ public class GiftItemServiceImpl implements GiftItemService {
     }
     @Override
     public List<GiftItemMin> getAllItemsForOwner(String ownerEmail) {
+        this.validatorService.isValidEmail(ownerEmail);
+
         return this.giftItemRepository.findGiftItemsByOwnerEmail(ownerEmail);
     }
     @Override

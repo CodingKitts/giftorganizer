@@ -39,8 +39,17 @@ public class GiftItemController {
     }
 
     @GetMapping("/owner/items")
-    public List<GiftItemMin> getItemsForOwner(Principal principal) {
-        return this.giftItemService.getAllItemsForOwner(principal.getName());
+    public ResponseEntity<List<GiftItemMin>> getItemsForOwner(Principal principal) {
+        try {
+            List<GiftItemMin> items = this.giftItemService.getAllItemsForOwner(principal.getName());
+            return new ResponseEntity<>(items, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(InvalidEmailException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
     }
 
     @GetMapping("/admin/items")
