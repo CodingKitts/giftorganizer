@@ -30,14 +30,15 @@ public class GiftItemServiceImpl implements GiftItemService {
         //NOTE: The ownerEmail is the User's list you are trying to obtain, not the current user.
         this.validatorService.isValidEmail(ownerEmail);
         this.validatorService.isValidEmail(friendEmail);
+        this.validatorService.friendshipExists(ownerEmail, friendEmail);
 
-        if (this.validatorService.areFriends(ownerEmail, friendEmail)) {
+        /*if (this.validatorService.friendshipExists(ownerEmail, friendEmail)) {
             //An empty list is sent regardless of whether there are no items, or if the ownerEmail is wrong.
             //We will make checks on the ownerEmail prior to getting info, that way if an empty list is returned, it is
             //only because the list was empty and not because the email is wrong.
             return this.giftItemRepository.findAllByOwnerEmail(ownerEmail);
-        }
-        return null;
+        }*/
+        return this.giftItemRepository.findAllByOwnerEmail(ownerEmail);
     }
     @Override
     public Collection<GiftItemMin> getAllItemsForOwner(String ownerEmail) {

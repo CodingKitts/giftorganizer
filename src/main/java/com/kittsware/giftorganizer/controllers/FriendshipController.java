@@ -121,7 +121,9 @@ public class FriendshipController {
 
     /* DELETE METHODS */
     @DeleteMapping("/friend")
-    public ResponseEntity<String> deleteFriendshipAsOwner(@RequestBody String friendEmail, Principal principal) {.
+    public ResponseEntity<String> deleteFriendshipAsOwner(@RequestBody String friendEmail, Principal principal) {
+        //TODO: Incorporate a Wish Item Service here to update purchased Items.
+        
         //We should send a warning to the user being deleted that they shoudl return any items.
 
         //Okay so you need to:
