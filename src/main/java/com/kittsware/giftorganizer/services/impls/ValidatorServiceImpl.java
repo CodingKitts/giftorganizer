@@ -57,30 +57,10 @@ public class ValidatorServiceImpl implements ValidatorService {
     }
 
     @Override
-    public boolean isValidNewItem(String ownerEmail, GiftItem item) {
-        //TODO: Refactor to throw a Custom Exception here instead. (Malformed Request, although do we say what is wrong?
-        //Check that the new item doesn't have an ID
-        if (item.getGiftItemId() != null) {
-            return false;
+    public void isValidNewItem(String ownerEmail, GiftItem item) {
+        if (item.getGiftItemId() != null || item.isBought() || !item.getOwnerEmail().equals(ownerEmail)) {
+            throw new InvalidItemException("Item is invalid");
         }
-
-        //Check that the new item doesn't have a Buyer
-        //FOr some reason Buyer email is added as a String?
-        if (item.getBuyerEmail() != null) {
-            return false;
-        }
-
-        //Check that the new item isn't bought
-        if (item.isBought()) {
-            return false;
-        }
-
-        //Check the current user & item Owner are the same
-        if (!item.getOwnerEmail().equals(ownerEmail)) {
-            return false;
-        }
-
-        return true;
     }
 
     @Override

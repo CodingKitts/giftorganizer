@@ -1,6 +1,8 @@
 package com.kittsware.giftorganizer.controllers;
 
 import com.kittsware.giftorganizer.entities.GiftItem;
+import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
+import com.kittsware.giftorganizer.exceptions.InvalidItemException;
 import com.kittsware.giftorganizer.projections.GiftItemMin;
 import com.kittsware.giftorganizer.services.GiftItemService;
 import org.slf4j.Logger;
@@ -53,10 +55,17 @@ public class GiftItemController {
 
     @PostMapping("/item")
     public ResponseEntity<GiftItem> createGiftItem(@Valid @RequestBody GiftItem giftItem, Principal principal) {
-        //TODO: Refactor this to consider all return options for saving a new item
-        GiftItem gift = this.giftItemService.createGiftItem(principal.getName(), giftItem);
+        try {
+            GiftItem gift = this.giftItemService.createGiftItem(principal.getName(), giftItem);
+            return new ResponseEntity<>(gift, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(InvalidEmailException.class) || e.getClass().equals(InvalidItemException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
-        return new ResponseEntity<>(gift, HttpStatus.CREATED);
+        }
     }
 
     @DeleteMapping("/item/{itemId}")

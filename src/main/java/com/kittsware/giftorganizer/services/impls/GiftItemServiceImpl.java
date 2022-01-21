@@ -59,13 +59,11 @@ public class GiftItemServiceImpl implements GiftItemService {
 
         return this.giftItemRepository.updateGiftItemAsOwner(giftItem.getGiftItemName(), giftItem.getGiftItemPrice(), giftItem.getGiftItemId());
     }
-
     @Override
     public int purchaseGiftItem(String purchaserEmail, Long giftItemId) {
         //TODO: Create this method
         return 0;
     }
-
     @Override
     public int returnGiftItem(String purchaserEmail, Long giftItemId) {
         //TODO: Create this method
@@ -75,9 +73,8 @@ public class GiftItemServiceImpl implements GiftItemService {
     //POST METHODS
     @Override
     public GiftItem createGiftItem(String ownerEmail, GiftItem giftItem) {
-        if (!this.validatorService.isValidNewItem(ownerEmail, giftItem)) {
-            return null;
-        }
+        this.validatorService.isValidEmail(ownerEmail);
+        this.validatorService.isValidNewItem(ownerEmail, giftItem);
 
         return this.giftItemRepository.save(giftItem);
     }
