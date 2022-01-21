@@ -13,7 +13,7 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     boolean existsFriendshipBySenderEmailAndRecipientEmail(String senderEmail, String recipientEmail);
     List<Friendship> findFriendshipsBySenderEmailAndAcceptedTrue(String senderEmail);
     List<Friendship> findFriendshipsByRecipientEmailAndAcceptedTrue(String recipientEmail);
-    int deleteFriendshipBySenderEmailAndRecipientEmail(String senderEmail, String recipientEmail);
+    void deleteFriendshipBySenderEmailAndRecipientEmail(String senderEmail, String recipientEmail);
 
     List<Friendship> findFriendshipsBySenderEmailAndAcceptedTrueOrRecipientEmailAndAcceptedTrue(String senderEmail, String recipientEmail);
 

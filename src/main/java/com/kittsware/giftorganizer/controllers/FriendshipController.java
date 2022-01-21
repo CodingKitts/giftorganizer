@@ -121,14 +121,7 @@ public class FriendshipController {
 
     /* DELETE METHODS */
     @DeleteMapping("/friend")
-    public boolean deleteFriendshipAsOwner(@RequestBody String friendEmail, Principal principal) {
-        //TODO: Refactor this to allow either the sender or recipient to delete a friendship. Make sure the friendship
-        //      is accepted first before deleting, and that the provided email is either the sender / recipient.
-
-        //Okay so someone wants to delete a friend from their list. What exactly does this mean?
-        //Make sure that a Friendship exists, delete it. What about any associated items?
-        //Do we assume a bought item will be returned? Or still given? I am leaning on returned.
-
+    public ResponseEntity<String> deleteFriendshipAsOwner(@RequestBody String friendEmail, Principal principal) {.
         //We should send a warning to the user being deleted that they shoudl return any items.
 
         //Okay so you need to:
@@ -137,12 +130,18 @@ public class FriendshipController {
         //Update Owner Items that were bought by the removed Friend to be returned.
         //Update Friend Items that were bought by the Owner to be returned.
 
-        //So either person on the Friendship can delete it.
+        //So if I delete a friendship I should remove all bought Items from that friendship. Or I should have a field
+        //for items that were bought but the friendship was deleted before the item was returned.
+        try {
+            this.friendshipService.deleteFriendship(principal.getName(), friendEmail);
+            return new ResponseEntity<>("Success. Friendship deleted.", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(FriendshipConflictException.class) || e.getClass().equals(InvalidEmailException.class)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
-        //TODO: If one friend deletes a friendship, does the other person still get access to their list?
-
-
-        return this.friendshipService.deleteFriendship(principal.getName(), friendEmail);
+        }
     }
     @DeleteMapping("/friend/{friendshipId}")
     public ResponseEntity<String> declineFriendshipRequest(@PathVariable Long friendshipId, Principal principal) {

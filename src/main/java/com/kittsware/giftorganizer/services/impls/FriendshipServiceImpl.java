@@ -42,8 +42,12 @@ public class FriendshipServiceImpl implements FriendshipService {
 
     @Override
     @Transactional
-    public boolean deleteFriendship(String senderEmail, String recipientEmail) {
-        return this.friendshipRepository.deleteFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail) == 1;
+    public void deleteFriendship(String senderEmail, String recipientEmail) {
+        this.validatorService.isValidEmail(recipientEmail);
+        this.validatorService.friendshipExists(senderEmail, recipientEmail);
+
+        //TODO: What should we do when we delete a friendship but there are purchased Items?
+        this.friendshipRepository.deleteFriendshipBySenderEmailAndRecipientEmail(senderEmail, recipientEmail);
     }
 
     @Override
