@@ -72,16 +72,6 @@ public class GiftItemServiceImpl implements GiftItemService {
     }
 
     //DELETE METHODS
-    //TODO: Move this functionality into some sort of UserRemoval Service.
-    @Override
-    @Transactional
-    public boolean deleteAllGiftItems(String ownerEmail) {
-        //Return true if more than 0 items were deleted.
-        //Will return true even if even 1 out of the entire list gets deleted.
-        //This function will only ever be used when a User deletes their Account.
-        return this.giftItemRepository.deleteGiftItemsByOwnerEmail(ownerEmail) > 0;
-    }
-
     @Override
     @Transactional
     public boolean deleteItemById(Long itemId) {

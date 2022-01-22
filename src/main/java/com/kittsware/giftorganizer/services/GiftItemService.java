@@ -36,6 +36,5 @@ public interface GiftItemService {
 
 
     //DELETE METHODS
-    boolean deleteAllGiftItems(String ownerEmail);
     boolean deleteItemById(Long itemId);
 }
