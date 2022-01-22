@@ -51,9 +51,15 @@ public class ValidatorServiceImpl implements ValidatorService {
     }
 
     @Override
-    public boolean isItemOwner(String ownerEmail, Long giftItemId) {
-        GiftItem giftItem = this.giftItemRepository.findById(giftItemId).orElse(null);
-        return giftItem != null && giftItem.getOwnerEmail().equals(ownerEmail);
+    public void isItemOwner(String ownerEmail, Long giftItemId) {
+        Optional<GiftItem> giftItem = this.giftItemRepository.findById(giftItemId);
+        if (giftItem.isEmpty()) {
+            throw new GiftItemNotFoundException("Gift item not found");
+        } else {
+            if (!giftItem.get().getOwnerEmail().equals(ownerEmail)) {
+                throw new InvalidOwnerException("Requested owner is not item owner");
+            }
+        }
     }
 
     @Override

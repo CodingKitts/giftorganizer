@@ -30,7 +30,7 @@ public interface GiftItemService {
     List<GiftItem> getAllItemsForFriend(String ownerEmail, String friendEmail);
 
     //UPDATE METHODS
-    int updateGiftItem(String ownerEmail, GiftItem giftItem);
+    void updateGiftItem(String ownerEmail, GiftItem giftItem);
     int purchaseGiftItem(String purchaserEmail, Long giftItemId);
     int returnGiftItem(String purchaserEmail, Long giftItemId);
 

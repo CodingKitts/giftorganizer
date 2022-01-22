@@ -4,6 +4,7 @@ import com.kittsware.giftorganizer.entities.GiftItem;
 import com.kittsware.giftorganizer.exceptions.FriendshipConflictException;
 import com.kittsware.giftorganizer.exceptions.InvalidEmailException;
 import com.kittsware.giftorganizer.exceptions.InvalidItemException;
+import com.kittsware.giftorganizer.exceptions.InvalidOwnerException;
 import com.kittsware.giftorganizer.projections.GiftItemMin;
 import com.kittsware.giftorganizer.services.GiftItemService;
 import org.slf4j.Logger;
@@ -63,8 +64,16 @@ public class GiftItemController {
     }
 
     @PutMapping("/item/{giftItemId}")
-    public int updateGiftItemAsOwner(@PathVariable Long giftItemId, @RequestBody GiftItem giftItem, Principal principal) {
-        return this.giftItemService.updateGiftItem(principal.getName(), giftItem);
+    public ResponseEntity<String> updateGiftItemAsOwner(@RequestBody GiftItem giftItem, Principal principal) {
+        try {
+            this.giftItemService.updateGiftItem(principal.getName(), giftItem);
+            return new ResponseEntity<>("Item Updated Successfully.", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            if (e.getClass().equals(InvalidOwnerException.class)) {
+                return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/item")

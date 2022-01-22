@@ -18,7 +18,7 @@ public interface GiftItemRepository extends JpaRepository<GiftItem, Long> {
 
     @Modifying
     @Query(value = "update gift_item g set g.gift_item_name = :giftItemName and g.gift_item_price = :giftItemPrice where g.gift_item_id = :giftItemId", nativeQuery = true)
-    int updateGiftItemAsOwner(String giftItemName, Double giftItemPrice, Long giftItemId);
+    void updateGiftItemAsOwner(String giftItemName, Double giftItemPrice, Long giftItemId);
 
     int deleteGiftItemsByOwnerEmail(String ownerEmail);
     int deleteGiftItemByGiftItemId(Long giftItemId);

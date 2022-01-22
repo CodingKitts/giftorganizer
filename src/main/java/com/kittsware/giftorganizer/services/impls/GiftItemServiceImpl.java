@@ -46,13 +46,10 @@ public class GiftItemServiceImpl implements GiftItemService {
 
     //PUT METHODS
     @Override
-    public int updateGiftItem(String ownerEmail, GiftItem giftItem) {
-        //Validate that the current User is in fact the Owner of the provided Gift item
-        if (this.validatorService.isItemOwner(ownerEmail, giftItem.getGiftItemId())) {
-            return 0;
-        }
+    public void updateGiftItem(String ownerEmail, GiftItem giftItem) {
+        this.validatorService.isItemOwner(ownerEmail, giftItem.getGiftItemId());
 
-        return this.giftItemRepository.updateGiftItemAsOwner(giftItem.getGiftItemName(), giftItem.getGiftItemPrice(), giftItem.getGiftItemId());
+        this.giftItemRepository.updateGiftItemAsOwner(giftItem.getGiftItemName(), giftItem.getGiftItemPrice(), giftItem.getGiftItemId());
     }
     @Override
     public int purchaseGiftItem(String purchaserEmail, Long giftItemId) {
