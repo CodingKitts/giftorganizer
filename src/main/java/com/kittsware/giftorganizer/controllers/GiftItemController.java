@@ -32,6 +32,7 @@ public class GiftItemController {
 
     @GetMapping("/items")
     public ResponseEntity<List<GiftItem>> getAllGiftItemsForFriend(@RequestBody String ownerEmail, Principal principal) {
+        //ownerEmail in this context is the Friend's list you are trying to get, not the list that you own.
         try {
             List<GiftItem> items = this.giftItemService.getAllItemsForFriend(ownerEmail, principal.getName());
             return new ResponseEntity<>(items, HttpStatus.OK);
